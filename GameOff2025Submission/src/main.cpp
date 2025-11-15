@@ -36,6 +36,7 @@
 
 
 #include "config.hpp"
+int cell_mouse = 0;
 int main()
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "WAVEBREAK");
@@ -56,14 +57,14 @@ int main()
     while (WindowShouldClose() == false)
     {
         // Game Logic
-
+        cell_mouse = get_cell_mouse();
         BeginDrawing();
         
         DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
         //draws grid
         draw_grid();
-        std::cout << get_cell_mouse() << "\n";
-        std::cout << grid_spaces_x [0] << ", " << grid_spaces_y[0] << "\n";
+        DrawRectangle(grid_spaces_x[cell_mouse], grid_spaces_y[cell_mouse], GRID_SPACE, GRID_SPACE, BLACK);
+        
         button_1.update();
         EndDrawing();
     }

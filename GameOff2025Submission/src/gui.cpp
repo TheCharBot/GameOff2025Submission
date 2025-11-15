@@ -26,20 +26,19 @@ void gui_init()
 }
 
 void gen_grid_coords(){
-    for (int x = 16; x < SCREEN_WIDTH-16; x += GRID_SPACE) {
-        for (int y = 16; y < SCREEN_HEIGHT-16; y += GRID_SPACE) {
-            
+    for (int y = 16; y < SCREEN_HEIGHT-16; y += GRID_SPACE) {
+        for (int x = 16; x < SCREEN_WIDTH-16; x += GRID_SPACE) {
             grid_spaces_x.push_back(x);
             grid_spaces_y.push_back(y);
-            
         }
     }
 }
 
+
 void draw_grid() {
     for (int x = 16; x < SCREEN_WIDTH-16; x += GRID_SPACE) {
         for (int y = 16; y < SCREEN_HEIGHT-16; y += GRID_SPACE) {
-            DrawRectangleLines(x, y, GRID_SPACE, GRID_SPACE, LIGHTGRAY);
+            DrawRectangleLines(x, y, GRID_SPACE, GRID_SPACE, BLACK);
             
             
         }
