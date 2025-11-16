@@ -15,6 +15,10 @@
 #define SLOT_3_X 437
 #define BOTTOM_BUTTON_Y 680
 #define GUI_SCALE 3
+#define MENU_X 232
+#define MENU_Y 256
+#define EXIT_X 0
+#define EXIT_Y 0
 
 //Wall-focused macros 
 #define WALL_SPRITE_HEIGHT 32

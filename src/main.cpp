@@ -36,7 +36,7 @@
 
 
 #include "config.hpp"
-int cell_mouse = 0;
+
 int main()
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "WAVEBREAK");
@@ -45,11 +45,7 @@ int main()
     UnloadImage(icon);
     SetTargetFPS(60);
 
-
-
     gui_init();
-    Bottom_button button_1;
-    button_1.init(1);
     
     gen_grid_coords();
     
@@ -61,11 +57,14 @@ int main()
         BeginDrawing();
         
         DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
-        //draws grid
-        draw_grid();
-        DrawRectangle(grid_spaces_x[get_cell_mouse()], grid_spaces_y[get_cell_mouse()], GRID_SPACE, GRID_SPACE, BLACK);
         
-        button_1.update();
+        
+
+        
+        
+        
+        update_gui();
+        
         EndDrawing();
     }
     
