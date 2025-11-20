@@ -36,14 +36,14 @@ class Wall{
         Rectangle down_left_connector = {0, 64, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
         Rectangle down_left_right_connector = {32, 64, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
         Rectangle up_down_wall = {64, 64, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
-    
+        Rectangle range_attacker = {0, 96, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+        Rectangle melee_attacker = {16, 96, 48, WALL_SPRITE_HEIGHT};
 
 
 
         void init();
         void update();
-        void spawn_clone(int x, int y);
-        void snap_to_grid();
+        
         
 
 };

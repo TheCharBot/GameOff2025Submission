@@ -55,15 +55,10 @@ int main()
         // Game Logic
         
         BeginDrawing();
-        
         DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
         
-        
-
-        
-        
-        
-        update_gui();
+        //updates gui
+        gui_update();
         
         EndDrawing();
     }

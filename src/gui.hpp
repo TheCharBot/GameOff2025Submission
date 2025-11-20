@@ -9,11 +9,13 @@
 extern std::vector<int> grid_spaces_x;
 extern std::vector<int> grid_spaces_y;
 
+extern int place_type;
 extern int menu_state;
 
 extern Texture2D all_elements;
 
-extern Rectangle elements[5];
+extern Rectangle tower_menu_rects[];
+extern Rectangle elements[7];
 extern Rectangle grid_select;
 extern Rectangle grid_square;
 extern Rectangle exit_rect;
@@ -22,13 +24,21 @@ extern Vector2 exit_position;
 extern Vector2 menu_position;
 extern Vector2 default_rotation;
 
-
 extern void gui_init();
+extern void gui_update();
+
+
+extern void draw_menu();
+extern void draw_menu_1_contents();
 extern void open_menu_1();
-extern void update_gui();
+extern void open_menu_2();
+extern void open_menu_3();
+
 extern int get_cell_mouse();
-extern void draw_grid();
+
 extern void gen_grid_coords();
+extern void draw_grid();
+
 
 
 class Bottom_button{

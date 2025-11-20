@@ -19,6 +19,8 @@
 #define MENU_Y 256
 #define EXIT_X 0
 #define EXIT_Y 0
+#define MENU_OFFSET_X 232
+#define MENU_OFFSET_Y 256
 
 //Wall-focused macros 
 #define WALL_SPRITE_HEIGHT 32
