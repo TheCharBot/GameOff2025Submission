@@ -4,6 +4,8 @@ Texture2D player_tex;
 
 Vector2 wall_place_pos;
 
+std::vector<Rectangle> connector_index = {};
+
 Rectangle empty_base = {0, 0, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
 Rectangle basic_connector = {32, 0, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
 Rectangle right_connector = {64, 0, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
@@ -33,27 +35,42 @@ int round_up(int numToRound, int multiple)
         return numToRound + multiple - remainder;
 }
 
-void player_init(){
+void player_init()
+{
     player_tex = LoadTexture("gfx/walls/walls.png");
 }
 
-void player_update(){
-    if(place_type == 0){
 
-    }
-    if(place_type == 1){
+void player_update()
+{
+    
+    
+    if (place_type == 0){}
+    if (place_type == 1)
+    {
         wall_place_pos.x = grid_spaces_x[get_cell_mouse()];
         wall_place_pos.y = grid_spaces_y[get_cell_mouse()];
         Rectangle scaled_sprites = {wall_place_pos.x, wall_place_pos.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
-        
+
         DrawTexturePro(player_tex, basic_connector, scaled_sprites, default_rotation, 0, WHITE);
-        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        {
+            
+            connector_index.push_back({wall_place_pos.x, wall_place_pos.y, 32, 32});
+            
             place_type = 0;
         }
     }
+
+    for(int i = 0; i < int(connector_index.size()); i++){
+        Rectangle scaled_sprites = {connector_index[i].x, connector_index[i].y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
+        DrawTexturePro(player_tex, basic_connector, scaled_sprites, default_rotation, 0, WHITE);
+        
+    }
+    
 }
 
-void Wall::init(){
+void Wall::init()
+{
     //
 }
-

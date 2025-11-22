@@ -12,6 +12,8 @@
 
 extern Texture2D player_tex;
 
+extern std::vector<Rectangle> connector_index;
+
 extern Vector2 wall_place_pos;
 
 extern Rectangle empty_base;
