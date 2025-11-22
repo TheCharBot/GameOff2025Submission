@@ -29,4 +29,12 @@
 #define GRID_SPACE 32
 
 
+//Player-focused macros
+#define TOWER_HEALTH 10
+#define RANGER_RANGE 4
+#define RANGER_DAMAGE 4
+#define MELEE_RANGE 1
+#define MELEE_DAMAGE 8
+
+
 #endif

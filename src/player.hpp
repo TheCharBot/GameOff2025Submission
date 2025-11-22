@@ -9,10 +9,14 @@
 #include "gui.hpp"
 #include "config.hpp"
 
+struct sprite_pos_rects{
+    Rectangle stuff_to_draw_rect;
+    Rectangle where_to_draw_stuff_rect;
+};
 
 extern Texture2D player_tex;
 
-extern std::vector<Rectangle> connector_index;
+extern std::vector<sprite_pos_rects> connector_index;
 extern std::vector<Rectangle> range_index;
 extern std::vector<Rectangle> melee_index;
 
