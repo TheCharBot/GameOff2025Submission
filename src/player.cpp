@@ -163,12 +163,18 @@ void player_update()
 
     for (int i = 0; i < int(range_index.size()); i++)
     {
+        std::sort(range_index.begin(), range_index.end(), [](auto& a, auto& b){
+            return a.y < b.y;
+        });
         Rectangle scaled_sprites = {range_index[i].x, range_index[i].y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
         DrawTexturePro(player_tex, range_attacker, scaled_sprites, default_rotation, 0, WHITE);
     }
 
     for (int i = 0; i < int(melee_index.size()); i++)
     {
+        std::sort(melee_index.begin(), melee_index.end(), [](auto& a, auto& b){
+            return a.y < b.y;
+        });
         Rectangle scaled_sprites = {melee_index[i].x, melee_index[i].y, float(48 * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
         DrawTexturePro(player_tex, melee_attacker, scaled_sprites, default_rotation, 0, WHITE);
     }
@@ -178,3 +184,4 @@ void Wall::init()
 {
     //
 }
+
