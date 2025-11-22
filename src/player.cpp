@@ -106,13 +106,16 @@ void player_update()
     bool left = false;
     bool up = false;
     bool down = false;
+    
     for (int i = 0; i < int(connector_index.size()); i++)
     {
 
         Rectangle scaled_sprites = {connector_index[i].where_to_draw_stuff_rect.x, connector_index[i].where_to_draw_stuff_rect.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
-
+        std::sort(connector_index.begin(), connector_index.end(), [](auto& a, auto& b){
+            return a.where_to_draw_stuff_rect.y < b.where_to_draw_stuff_rect.y;
+        });
         DrawTexturePro(player_tex, connector_index[i].stuff_to_draw_rect, scaled_sprites, default_rotation, 0, WHITE);
-
+        
         right = false;
         left = false;
         up = false;

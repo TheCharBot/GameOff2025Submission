@@ -4,6 +4,8 @@
 #include "raylib.h"
 #include <iostream>
 #include <utility>
+#include <algorithm>
+
 
 // Global-focused macros
 #define SCREEN_HEIGHT 800
