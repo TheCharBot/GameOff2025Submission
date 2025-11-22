@@ -45,9 +45,9 @@ void player_init()
 void player_update()
 {
 
-    if (place_type == 0){}
-
-
+    if (place_type == 0)
+    {
+    }
 
     // connector placement
     if (place_type == 1)
@@ -59,15 +59,13 @@ void player_update()
         DrawTexturePro(player_tex, basic_connector, scaled_sprites, default_rotation, 0, WHITE);
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
-            
-            
+
             connector_index.push_back({basic_connector, {wall_place_pos.x, wall_place_pos.y, 32, 32}});
+            
 
             place_type = 0;
         }
     }
-
-
 
     // range attacker placement
     if (place_type == 2)
@@ -86,8 +84,6 @@ void player_update()
         }
     }
 
-
-
     // melee attacker placement
     if (place_type == 3)
     {
@@ -105,12 +101,61 @@ void player_update()
         }
     }
 
-
-    //drawing stored towers
+    // drawing stored towers
+    bool right = false;
+    bool left = false;
+    bool up = false;
+    bool down = false;
     for (int i = 0; i < int(connector_index.size()); i++)
     {
+
         Rectangle scaled_sprites = {connector_index[i].where_to_draw_stuff_rect.x, connector_index[i].where_to_draw_stuff_rect.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
+
         DrawTexturePro(player_tex, connector_index[i].stuff_to_draw_rect, scaled_sprites, default_rotation, 0, WHITE);
+
+        right = false;
+        left = false;
+        up = false;
+        down = false;
+        for (int j = 0; j < int(connector_index.size()); j++)
+        {
+            
+            if(i == j) continue;
+            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y - 32) up = true;
+            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y + 32) down = true;
+            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x - 32 && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y) left = true;
+            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x + 32 && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y) right = true;
+            
+
+            if (up && down && left && right) {
+                connector_index[i].stuff_to_draw_rect = down_left_right_connector;   // optional
+            }
+            else if (left && right && !up && !down) {
+                connector_index[i].stuff_to_draw_rect = left_right_wall;
+            }
+            else if (up && down && !left && !right) {
+                connector_index[i].stuff_to_draw_rect = up_down_wall;
+            }
+            else if (down && right) {
+                connector_index[i].stuff_to_draw_rect = down_right_connector;
+            }
+            else if (down && left) {
+                connector_index[i].stuff_to_draw_rect = down_left_connector;
+            }
+            else if (right) {
+                connector_index[i].stuff_to_draw_rect = right_connector;
+            }
+            else if (left) {
+                connector_index[i].stuff_to_draw_rect = left_connector;
+            }
+            else if (down) {
+                connector_index[i].stuff_to_draw_rect = down_connector;
+            }
+            else {
+                connector_index[i].stuff_to_draw_rect = basic_connector;
+            }
+            
+        }
     }
 
     for (int i = 0; i < int(range_index.size()); i++)
@@ -124,8 +169,6 @@ void player_update()
         Rectangle scaled_sprites = {melee_index[i].x, melee_index[i].y, float(48 * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
         DrawTexturePro(player_tex, melee_attacker, scaled_sprites, default_rotation, 0, WHITE);
     }
-
-    
 }
 
 void Wall::init()
