@@ -13,6 +13,8 @@
 extern Texture2D player_tex;
 
 extern std::vector<Rectangle> connector_index;
+extern std::vector<Rectangle> range_index;
+extern std::vector<Rectangle> melee_index;
 
 extern Vector2 wall_place_pos;
 
