@@ -126,6 +126,7 @@ void open_menu_1()
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
         {
             menu_state = 0;
+            place_type = 0;
         }
     }
 }

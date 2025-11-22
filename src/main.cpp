@@ -46,7 +46,8 @@ int main()
     SetTargetFPS(60);
 
     gui_init();
-    
+    player_init();
+
     gen_grid_coords();
     
     // Game Loop
@@ -58,6 +59,7 @@ int main()
         DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
         
         //updates gui
+        player_update();
         gui_update();
         
         EndDrawing();
