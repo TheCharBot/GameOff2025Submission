@@ -22,6 +22,13 @@ Rectangle up_down_wall = {64, 64, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
 Rectangle range_attacker = {0, 96, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
 Rectangle melee_attacker = {16, 96, 48, WALL_SPRITE_HEIGHT};
 
+
+bool right = false;
+bool left = false;
+bool up = false;
+bool down = false;
+
+
 int round_up(int numToRound, int multiple)
 {
     if (multiple == 0)
@@ -102,10 +109,7 @@ void player_update()
     }
 
     // drawing stored towers
-    bool right = false;
-    bool left = false;
-    bool up = false;
-    bool down = false;
+    
     
     for (int i = 0; i < int(connector_index.size()); i++)
     {
@@ -179,9 +183,3 @@ void player_update()
         DrawTexturePro(player_tex, melee_attacker, scaled_sprites, default_rotation, 0, WHITE);
     }
 }
-
-void Wall::init()
-{
-    //
-}
-
