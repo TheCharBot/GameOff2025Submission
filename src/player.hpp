@@ -37,7 +37,6 @@ extern Rectangle range_attacker;
 extern Rectangle melee_attacker;
 
 
-int round_up(int numToRound, int multiple);
 
 
 extern void player_init();
