@@ -6,6 +6,7 @@
 #include <utility>
 #include <algorithm>
 #include <bits/stdc++.h>
+#include <stdlib.h> 
 
 // Global-focused macros
 #define SCREEN_HEIGHT 800
@@ -41,7 +42,16 @@
 //Enemy-focused macros
 #define ENEMY_SPRITE_WIDTH 16
 #define ENEMY_SPRITE_HEIGHT 16
-#define WAVE_1_AMOUNT 100
+#define LVL1_SPRITE_WIDTH 7
+#define LVL1_SPRITE_HEIGHT 5
+#define LVL2_SPRITE_WIDTH 9
+#define LVL2_SPRITE_HEIGHT 7
+#define LVL3_SPRITE_WIDTH 11
+#define LVL3_SPRITE_HEIGHT 8
+#define LVL4_SPRITE_WIDTH 16
+#define LVL4_SPRITE_HEIGHT 12
+#define ENEMY_SCALE 2
+#define WAVE_1_AMOUNT 1000
 #define LVL_1_SPEED 10
 #define LVL_1_HEALTH 5
 

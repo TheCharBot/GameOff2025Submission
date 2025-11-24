@@ -22,14 +22,10 @@ Rectangle up_down_wall = {64, 64, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
 Rectangle range_attacker = {0, 96, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
 Rectangle melee_attacker = {16, 96, 48, WALL_SPRITE_HEIGHT};
 
-
 bool right = false;
 bool left = false;
 bool up = false;
 bool down = false;
-
-
-
 
 void player_init()
 {
@@ -55,7 +51,6 @@ void player_update()
         {
 
             connector_index.push_back({basic_connector, {wall_place_pos.x, wall_place_pos.y, 32, 32}});
-            
 
             place_type = 0;
         }
@@ -96,48 +91,64 @@ void player_update()
     }
 
     // drawing stored towers
-    
-    std::sort(connector_index.begin(), connector_index.end(), [](auto& a, auto& b){
-            return a.where_to_draw_stuff_rect.y < b.where_to_draw_stuff_rect.y;
-        });
+
+    std::sort(connector_index.begin(), connector_index.end(), [](auto &a, auto &b)
+              { return a.where_to_draw_stuff_rect.y < b.where_to_draw_stuff_rect.y; });
 
     for (int i = 0; i < int(connector_index.size()); i++)
     {
 
-        
-        
-        
-        
         right = false;
         left = false;
         up = false;
         down = false;
         for (int j = 0; j < int(connector_index.size()); j++)
         {
-            if(i == j) continue;
-            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y - 32) up = true;
-            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y + 32) down = true;
-            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x - 32 && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y) left = true;
-            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x + 32 && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y) right = true;
+            if (i == j)
+                continue;
+            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y - 32)
+                up = true;
+            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y + 32)
+                down = true;
+            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x - 32 && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y)
+                left = true;
+            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x + 32 && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y)
+                right = true;
         }
         Rectangle sprite;
 
-        if (up && down && left && right) sprite = down_left_right_connector;
-        else if (down && left && right) sprite = down_left_right_connector;
-        else if (up && left && right)   sprite = left_right_connector;
-        else if (up && down && left)    sprite = down_left_connector;
-        else if (up && down && right)   sprite = down_right_connector;
-        else if (left && right)         sprite = left_right_wall;
-        else if (up && down)            sprite = up_down_wall;
-        else if (down && right)         sprite = down_right_connector;
-        else if (down && left)          sprite = down_left_connector;
-        else if (up && right)           sprite = right_connector;
-        else if (up && left)            sprite = left_connector;
-        else if (right)                 sprite = right_connector;
-        else if (left)                  sprite = left_connector;
-        else if (down)                  sprite = down_connector;
-        else if (up)                    sprite = basic_connector;
-        else                            sprite = basic_connector;
+        if (up && down && left && right)
+            sprite = down_left_right_connector;
+        else if (down && left && right)
+            sprite = down_left_right_connector;
+        else if (up && left && right)
+            sprite = left_right_connector;
+        else if (up && down && left)
+            sprite = down_left_connector;
+        else if (up && down && right)
+            sprite = down_right_connector;
+        else if (left && right)
+            sprite = left_right_wall;
+        else if (up && down)
+            sprite = up_down_wall;
+        else if (down && right)
+            sprite = down_right_connector;
+        else if (down && left)
+            sprite = down_left_connector;
+        else if (up && right)
+            sprite = right_connector;
+        else if (up && left)
+            sprite = left_connector;
+        else if (right)
+            sprite = right_connector;
+        else if (left)
+            sprite = left_connector;
+        else if (down)
+            sprite = down_connector;
+        else if (up)
+            sprite = basic_connector;
+        else
+            sprite = basic_connector;
 
         connector_index[i].stuff_to_draw_rect = sprite;
         Rectangle scaled_sprites = {connector_index[i].where_to_draw_stuff_rect.x, connector_index[i].where_to_draw_stuff_rect.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
@@ -147,18 +158,16 @@ void player_update()
 
     for (int i = 0; i < int(range_index.size()); i++)
     {
-        std::sort(range_index.begin(), range_index.end(), [](auto& a, auto& b){
-            return a.y < b.y;
-        });
+        std::sort(range_index.begin(), range_index.end(), [](auto &a, auto &b)
+                  { return a.y < b.y; });
         Rectangle scaled_sprites = {range_index[i].x, range_index[i].y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
         DrawTexturePro(player_tex, range_attacker, scaled_sprites, default_rotation, 0, WHITE);
     }
 
     for (int i = 0; i < int(melee_index.size()); i++)
     {
-        std::sort(melee_index.begin(), melee_index.end(), [](auto& a, auto& b){
-            return a.y < b.y;
-        });
+        std::sort(melee_index.begin(), melee_index.end(), [](auto &a, auto &b)
+                  { return a.y < b.y; });
         Rectangle scaled_sprites = {melee_index[i].x, melee_index[i].y, float(48 * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
         DrawTexturePro(player_tex, melee_attacker, scaled_sprites, default_rotation, 0, WHITE);
     }

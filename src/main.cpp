@@ -49,6 +49,7 @@ int main()
     gui_init();
     player_init();
     wave_1_init();
+    enemies_init();
     //generating grid
     gen_grid_coords();
     
@@ -63,6 +64,7 @@ int main()
         //updating stuff
         
         player_update();
+        
         wave_1_update();
         gui_update();
         
