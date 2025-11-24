@@ -97,15 +97,16 @@ void player_update()
 
     // drawing stored towers
     
-    
+    std::sort(connector_index.begin(), connector_index.end(), [](auto& a, auto& b){
+            return a.where_to_draw_stuff_rect.y < b.where_to_draw_stuff_rect.y;
+        });
+
     for (int i = 0; i < int(connector_index.size()); i++)
     {
 
-        Rectangle scaled_sprites = {connector_index[i].where_to_draw_stuff_rect.x, connector_index[i].where_to_draw_stuff_rect.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
-        std::sort(connector_index.begin(), connector_index.end(), [](auto& a, auto& b){
-            return a.where_to_draw_stuff_rect.y < b.where_to_draw_stuff_rect.y;
-        });
-        DrawTexturePro(player_tex, connector_index[i].stuff_to_draw_rect, scaled_sprites, default_rotation, 0, WHITE);
+        
+        
+        
         
         right = false;
         left = false;
@@ -113,43 +114,35 @@ void player_update()
         down = false;
         for (int j = 0; j < int(connector_index.size()); j++)
         {
-            
             if(i == j) continue;
             if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y - 32) up = true;
             if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y + 32) down = true;
             if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x - 32 && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y) left = true;
             if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x + 32 && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y) right = true;
-            
-
-            if (up && down && left && right) {
-                connector_index[i].stuff_to_draw_rect = down_left_right_connector;   // optional
-            }
-            else if (left && right && !up && !down) {
-                connector_index[i].stuff_to_draw_rect = left_right_wall;
-            }
-            else if (up && down && !left && !right) {
-                connector_index[i].stuff_to_draw_rect = up_down_wall;
-            }
-            else if (down && right) {
-                connector_index[i].stuff_to_draw_rect = down_right_connector;
-            }
-            else if (down && left) {
-                connector_index[i].stuff_to_draw_rect = down_left_connector;
-            }
-            else if (right) {
-                connector_index[i].stuff_to_draw_rect = right_connector;
-            }
-            else if (left) {
-                connector_index[i].stuff_to_draw_rect = left_connector;
-            }
-            else if (down) {
-                connector_index[i].stuff_to_draw_rect = down_connector;
-            }
-            else {
-                connector_index[i].stuff_to_draw_rect = basic_connector;
-            }
-            
         }
+        Rectangle sprite;
+
+        if (up && down && left && right) sprite = down_left_right_connector;
+        else if (down && left && right) sprite = down_left_right_connector;
+        else if (up && left && right)   sprite = left_right_connector;
+        else if (up && down && left)    sprite = down_left_connector;
+        else if (up && down && right)   sprite = down_right_connector;
+        else if (left && right)         sprite = left_right_wall;
+        else if (up && down)            sprite = up_down_wall;
+        else if (down && right)         sprite = down_right_connector;
+        else if (down && left)          sprite = down_left_connector;
+        else if (up && right)           sprite = right_connector;
+        else if (up && left)            sprite = left_connector;
+        else if (right)                 sprite = right_connector;
+        else if (left)                  sprite = left_connector;
+        else if (down)                  sprite = down_connector;
+        else if (up)                    sprite = basic_connector;
+        else                            sprite = basic_connector;
+
+        connector_index[i].stuff_to_draw_rect = sprite;
+        Rectangle scaled_sprites = {connector_index[i].where_to_draw_stuff_rect.x, connector_index[i].where_to_draw_stuff_rect.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
+
+        DrawTexturePro(player_tex, connector_index[i].stuff_to_draw_rect, scaled_sprites, default_rotation, 0, WHITE);
     }
 
     for (int i = 0; i < int(range_index.size()); i++)

@@ -33,7 +33,7 @@
 
 #include "gui.hpp"
 #include "player.hpp"
-
+#include "enemies.hpp"
 
 #include "config.hpp"
 
@@ -45,9 +45,11 @@ int main()
     UnloadImage(icon);
     SetTargetFPS(60);
 
+    //initing stuff
     gui_init();
     player_init();
-
+    wave_1_init();
+    //generating grid
     gen_grid_coords();
     
     // Game Loop
@@ -58,10 +60,14 @@ int main()
         BeginDrawing();
         DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
         
-        //updates gui
+        //updating stuff
+        
         player_update();
+        wave_1_update();
         gui_update();
         
+        
+
         EndDrawing();
     }
     

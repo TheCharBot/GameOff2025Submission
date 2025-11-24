@@ -5,7 +5,7 @@
 #include <iostream>
 #include <utility>
 #include <algorithm>
-
+#include <bits/stdc++.h>
 
 // Global-focused macros
 #define SCREEN_HEIGHT 800
@@ -38,5 +38,11 @@
 #define MELEE_RANGE 1
 #define MELEE_DAMAGE 8
 
+//Enemy-focused macros
+#define ENEMY_SPRITE_WIDTH 16
+#define ENEMY_SPRITE_HEIGHT 16
+#define WAVE_1_AMOUNT 100
+#define LVL_1_SPEED 10
+#define LVL_1_HEALTH 5
 
 #endif
