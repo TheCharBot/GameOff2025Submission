@@ -16,6 +16,14 @@ struct enemy
     Rectangle rect;
 };
 
+struct coordinate{
+    int x; 
+    int y;
+};
+
+extern coordinate possible_spawnpoints[6];
+extern std::vector<enemy> enemy_list;
+
 extern Texture2D enemy_tex;
 
 extern Rectangle scaled_sprites;

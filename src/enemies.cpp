@@ -3,6 +3,14 @@
 Texture2D enemy_tex;
 
 std::vector<enemy> enemy_list;
+coordinate possible_spawnpoints[6] = {
+    {0, 0},
+    {0, 400},
+    {0, 750},
+    {750, 0},
+    {750, 400},
+    {750, 750}
+};
 
 Rectangle scaled_sprites;
 
@@ -45,24 +53,41 @@ void wave_1_init()
     // setting it to a base color, random later
     lvl1_base.img_rect = lvl1_green;
     lvl1_base.rect = {lvl1_base.pos.x, lvl1_base.pos.y, 7, 5};
-    // int num = rand() % 5;
-    // switch (num)
-    // {
-    // case 0:
-    //     lvl1_base.img_rect = lvl1_green;
-    // case 1:
-    //     lvl1_base.img_rect = lvl1_pink;
-    // case 2:
-    //     lvl1_base.img_rect = lvl1_yellow;
-    // case 3:
-    //     lvl1_base.img_rect = lvl1_brown;
-    // case 4:
-    //     lvl1_base.img_rect = lvl1_red;
-    // case 5:
-    //     lvl1_base.img_rect = lvl1_blue;
-    // }
+    
     for (int i = 0; i < WAVE_1_AMOUNT; i++)
     {
+        int num = rand() % 6;
+        
+        if(num == 0){
+            lvl1_base.img_rect = lvl1_green;
+            lvl1_base.pos.x = possible_spawnpoints[num].x;
+            lvl1_base.pos.y = possible_spawnpoints[num].y;
+        }
+        if(num == 1){
+            lvl1_base.img_rect = lvl1_pink;
+            lvl1_base.pos.x = possible_spawnpoints[num].x;
+            lvl1_base.pos.y = possible_spawnpoints[num].y;
+        }
+        if(num == 2){
+            lvl1_base.img_rect = lvl1_yellow;
+            lvl1_base.pos.x = possible_spawnpoints[num].x;
+            lvl1_base.pos.y = possible_spawnpoints[num].y;
+        }
+        if(num == 3){
+            lvl1_base.img_rect = lvl1_brown;
+            lvl1_base.pos.x = possible_spawnpoints[num].x;
+            lvl1_base.pos.y = possible_spawnpoints[num].y;
+        }
+        if(num == 4){
+            lvl1_base.img_rect = lvl1_red;
+            lvl1_base.pos.x = possible_spawnpoints[num].x;
+            lvl1_base.pos.y = possible_spawnpoints[num].y;
+        }
+        if(num == 5){
+            lvl1_base.img_rect = lvl1_blue;
+            lvl1_base.pos.x = possible_spawnpoints[num].x;
+            lvl1_base.pos.y = possible_spawnpoints[num].y;
+        }
         enemy_list.push_back(lvl1_base);
     }
 }
@@ -74,13 +99,15 @@ void wave_1_update()
     {
         for (int j = 0; j < int(connector_index.size()); j++)
         {
-            //works!
+            //works! like, too well!
+            //implement killing the clones here:
             if (CheckCollisionRecs(enemy_list[i].rect, connector_index[j].where_to_draw_stuff_rect))
             {
                 
             }
         }
 
+        //implement moving towards the center here:
         Rectangle scaled_sprites = {enemy_list[i].pos.x, enemy_list[i].pos.y, enemy_list[i].rect.width * ENEMY_SCALE, enemy_list[i].rect.height * ENEMY_SCALE};
         DrawTexturePro(enemy_tex, enemy_list[i].img_rect, scaled_sprites, default_rotation, 0, WHITE);
     }
