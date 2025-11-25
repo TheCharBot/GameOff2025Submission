@@ -2,6 +2,8 @@
 
 Texture2D enemy_tex;
 
+Vector2 target;
+
 std::vector<enemy> enemy_list;
 coordinate possible_spawnpoints[6] = {
     {0, 0},
@@ -44,7 +46,11 @@ Rectangle lvl4_blue = {16, 176, LVL4_SPRITE_WIDTH, LVL4_SPRITE_HEIGHT};
 
 void wave_1_init()
 {
+    //setting target in a vector
+    target.x = 400;
+    target.y = 400;
 
+    //making base enemy
     enemy lvl1_base;
     lvl1_base.speed = 10;
     lvl1_base.health = 5;
@@ -108,6 +114,10 @@ void wave_1_update()
         }
 
         //implement moving towards the center here:
+        Vector2 dir = Vector2Normalize(Vector2Subtract(target, enemy_list[i].pos));
+        enemy_list[i].pos = Vector2Add(enemy_list[i].pos, Vector2Scale(dir, enemy_list[i].speed * GetFrameTime()));
+
+        
         Rectangle scaled_sprites = {enemy_list[i].pos.x, enemy_list[i].pos.y, enemy_list[i].rect.width * ENEMY_SCALE, enemy_list[i].rect.height * ENEMY_SCALE};
         DrawTexturePro(enemy_tex, enemy_list[i].img_rect, scaled_sprites, default_rotation, 0, WHITE);
     }

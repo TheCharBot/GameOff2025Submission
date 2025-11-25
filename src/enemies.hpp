@@ -21,6 +21,9 @@ struct coordinate{
     int y;
 };
 
+
+extern Vector2 target;
+
 extern coordinate possible_spawnpoints[6];
 extern std::vector<enemy> enemy_list;
 

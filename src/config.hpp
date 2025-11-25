@@ -2,6 +2,7 @@
 #define CONFIG_HPP
 
 #include "raylib.h"
+#include "raymath.h"
 #include <iostream>
 #include <utility>
 #include <algorithm>
