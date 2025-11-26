@@ -12,7 +12,7 @@
 struct sprite_pos_rects{
     Rectangle img_rect;
     Rectangle rect;
-    int health;
+    float health;
 };
 
 extern Texture2D player_tex;

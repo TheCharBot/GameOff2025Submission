@@ -56,8 +56,8 @@ void wave_1_init()
     enemy lvl1_base;
 
     lvl1_base.health = LVL_1_HEALTH;
-    lvl1_base.pos.x = 100;
-    lvl1_base.pos.y = 100;
+    lvl1_base.pos.x = 0;
+    lvl1_base.pos.y = 0;
     // setting it to a base color, random later
     lvl1_base.img_rect = lvl1_green;
     lvl1_base.rect = {lvl1_base.pos.x, lvl1_base.pos.y, 7, 5};
@@ -167,10 +167,11 @@ void wave_1_init()
 
 void wave_1_update()
 {
-
+    //does the stuff for every enemy instance
     for (int i = 0; i < int(enemy_list.size()); i++)
     {
 
+        //damage-related checkers
         for (int j = 0; j < int(connector_index.size()); j++)
         {
             // works! like, too well!
@@ -178,18 +179,50 @@ void wave_1_update()
             // implement killing the clones here:
             if (CheckCollisionRecs(enemy_list[i].rect, connector_index[j].rect))
             {
-                connector_index[j].health -= 1;
+                connector_index[j].health -= 0.1;
+                if(enemy_list[i].pos.x < 400){
+                    enemy_list[i].pos.x-=KNOCKBACK;
+                }
+                else if(enemy_list[i].pos.x > 400){
+                    enemy_list[i].pos.x+=KNOCKBACK;
+                }
+                if(enemy_list[i].pos.y < 400){
+                    enemy_list[i].pos.y-=KNOCKBACK;
+                }
+                else if(enemy_list[i].pos.y > 400){
+                    enemy_list[i].pos.y+=KNOCKBACK;
+                }
             }
             if(enemy_list[i].health == 0){
                 enemy_list.erase(enemy_list.begin() + i);
             }
         }
-
-        // implement moving towards the center here:
+        for (int j = 0; j < int(melee_index.size()); j++)
+        {
+            if (CheckCollisionRecs(enemy_list[i].rect, melee_index[j]))
+            {
+                enemy_list[i].health -= 5;
+                if(enemy_list[i].pos.x < 400){
+                    enemy_list[i].pos.x-=KNOCKBACK;
+                }
+                else if(enemy_list[i].pos.x > 400){
+                    enemy_list[i].pos.x+=KNOCKBACK;
+                }
+                if(enemy_list[i].pos.y < 400){
+                    enemy_list[i].pos.y-=KNOCKBACK;
+                }
+                else if(enemy_list[i].pos.y > 400){
+                    enemy_list[i].pos.y+=KNOCKBACK;
+                }
+            }
+        }
+        //moving towards the center and other movement calculations
         Vector2 dir = Vector2Normalize(Vector2Subtract(target, enemy_list[i].pos));
         enemy_list[i].pos = Vector2Add(enemy_list[i].pos, Vector2Scale(dir, enemy_list[i].speed * GetFrameTime()));
         enemy_list[i].rect.x = enemy_list[i].pos.x;
         enemy_list[i].rect.y = enemy_list[i].pos.y;
+
+        //enemy-to enemy collision checks to reduce clipping
         for (int j = 0; j < int(enemy_list.size()); j++)
         {
             if (i == j)
@@ -216,6 +249,8 @@ void wave_1_update()
                 }
             }
         }
+        
+        //keeping the clones inside the screen
         if (enemy_list[i].pos.x > 790)
         {
             enemy_list[i].pos.x = 790;

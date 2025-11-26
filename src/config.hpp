@@ -56,7 +56,7 @@
 #define LVL_1_SPEED 10
 #define LVL_1_HEALTH 5
 #define LVL_2_HEALTH 10
-
+#define KNOCKBACK 25
 
 
 #endif
