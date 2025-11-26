@@ -25,6 +25,8 @@ struct coordinate{
 extern Vector2 target;
 
 extern coordinate possible_spawnpoints[6];
+
+extern std::vector<enemy> empty_list;
 extern std::vector<enemy> enemy_list;
 
 extern Texture2D enemy_tex;

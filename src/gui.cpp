@@ -59,10 +59,7 @@ void gui_update()
     {
         open_menu_1();
     }
-    if (menu_state == 2)
-    {
-        
-    }
+    
     if (menu_state == 3)
     {
         open_menu_3();
@@ -226,10 +223,12 @@ void Bottom_button::update()
             }
             if (self_index == 2)
             {
-                menu_state = 2;
-                
-                wave_state = 1;
-                wave_1_init();
+                menu_state = 0;
+                if(wave_state == 1){}
+                if(wave_state != 1){
+                    wave_state = 1;
+                    wave_1_init();
+                }
                 
 
             }

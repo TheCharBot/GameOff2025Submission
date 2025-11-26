@@ -64,12 +64,12 @@ int main()
         //updating stuff
         
         player_update();
-        
-        
-        gui_update();
-        
         enemies_update();
-
+        
+        
+        
+        //updating gui
+        gui_update();
         EndDrawing();
     }
     

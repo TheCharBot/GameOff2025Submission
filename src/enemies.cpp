@@ -7,6 +7,7 @@ Vector2 target;
 int num = 0;
 
 std::vector<enemy> enemy_list;
+std::vector<enemy> empty_list = {};
 coordinate possible_spawnpoints[6] = {
     {0, 0},
     {0, 400},
@@ -179,6 +180,9 @@ void wave_1_update()
             {
                 connector_index[j].health -= 1;
             }
+            if(enemy_list[i].health == 0){
+                enemy_list.erase(enemy_list.begin() + i);
+            }
         }
 
         // implement moving towards the center here:
@@ -242,5 +246,8 @@ void enemies_update() {
     if(wave_state == 0){}
     if(wave_state == 1){
         wave_1_update();
+        if(enemy_list.size() == 0){
+            wave_state = 0;
+        }
     }
 };
