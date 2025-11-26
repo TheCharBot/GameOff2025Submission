@@ -165,7 +165,7 @@ void wave_1_init()
     }
 }
 
-void wave_1_update()
+void wave_update()
 {
     //does the stuff for every enemy instance
     for (int i = 0; i < int(enemy_list.size()); i++)
@@ -193,9 +193,7 @@ void wave_1_update()
                     enemy_list[i].pos.y+=KNOCKBACK;
                 }
             }
-            if(enemy_list[i].health == 0){
-                enemy_list.erase(enemy_list.begin() + i);
-            }
+            
         }
         for (int j = 0; j < int(melee_index.size()); j++)
         {
@@ -215,6 +213,9 @@ void wave_1_update()
                     enemy_list[i].pos.y+=KNOCKBACK;
                 }
             }
+        }
+        if(enemy_list[i].health <= 0){
+            enemy_list.erase(enemy_list.begin() + i);
         }
         //moving towards the center and other movement calculations
         Vector2 dir = Vector2Normalize(Vector2Subtract(target, enemy_list[i].pos));
@@ -280,7 +281,7 @@ void enemies_init()
 void enemies_update() {
     if(wave_state == 0){}
     if(wave_state == 1){
-        wave_1_update();
+        wave_update();
         if(enemy_list.size() == 0){
             wave_state = 0;
         }
