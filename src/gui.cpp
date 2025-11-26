@@ -1,10 +1,12 @@
 #include "gui.hpp"
 
 #include "config.hpp"
+#include "enemies.hpp"
 
 //0 for null, 1 for basic tower, 2 for ranged, 3 for melee tower
 int place_type = 0;
 int menu_state = 0;
+int wave_state = 0;
 
 Bottom_button button_1;
 Bottom_button button_2;
@@ -59,7 +61,7 @@ void gui_update()
     }
     if (menu_state == 2)
     {
-        open_menu_2();
+        
     }
     if (menu_state == 3)
     {
@@ -130,17 +132,7 @@ void open_menu_1()
         }
     }
 }
-void open_menu_2()
-{
-    draw_menu();
-    if (CheckCollisionPointRec(GetMousePosition(), exit_rect))
-    {
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-        {
-            menu_state = 0;
-        }
-    }
-}
+
 void open_menu_3()
 {
     draw_menu();
@@ -235,6 +227,11 @@ void Bottom_button::update()
             if (self_index == 2)
             {
                 menu_state = 2;
+                
+                wave_state = 1;
+                wave_1_init();
+                
+
             }
             if (self_index == 3)
             {

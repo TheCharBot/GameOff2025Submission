@@ -10,8 +10,9 @@
 #include "config.hpp"
 
 struct sprite_pos_rects{
-    Rectangle stuff_to_draw_rect;
-    Rectangle where_to_draw_stuff_rect;
+    Rectangle img_rect;
+    Rectangle rect;
+    int health;
 };
 
 extern Texture2D player_tex;
@@ -41,7 +42,7 @@ extern Rectangle melee_attacker;
 
 extern void player_init();
 extern void player_update();
-
+extern void add_towers();
 
 
 

@@ -55,5 +55,8 @@
 #define WAVE_1_AMOUNT 100
 #define LVL_1_SPEED 10
 #define LVL_1_HEALTH 5
+#define LVL_2_HEALTH 10
+
+
 
 #endif

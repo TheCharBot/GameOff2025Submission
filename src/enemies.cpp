@@ -54,7 +54,7 @@ void wave_1_init()
     // making base enemy
     enemy lvl1_base;
 
-    lvl1_base.health = 5;
+    lvl1_base.health = LVL_1_HEALTH;
     lvl1_base.pos.x = 100;
     lvl1_base.pos.y = 100;
     // setting it to a base color, random later
@@ -169,14 +169,15 @@ void wave_1_update()
 
     for (int i = 0; i < int(enemy_list.size()); i++)
     {
-        
+
         for (int j = 0; j < int(connector_index.size()); j++)
         {
             // works! like, too well!
 
             // implement killing the clones here:
-            if (CheckCollisionRecs(enemy_list[i].rect, connector_index[j].where_to_draw_stuff_rect))
+            if (CheckCollisionRecs(enemy_list[i].rect, connector_index[j].rect))
             {
+                connector_index[j].health -= 1;
             }
         }
 
@@ -187,10 +188,11 @@ void wave_1_update()
         enemy_list[i].rect.y = enemy_list[i].pos.y;
         for (int j = 0; j < int(enemy_list.size()); j++)
         {
-            if(i == j) continue;
+            if (i == j)
+                continue;
             if (CheckCollisionRecs(enemy_list[i].rect, enemy_list[j].rect))
             {
-                
+
                 num = rand() % 4;
                 if (num == 0)
                 {
@@ -210,16 +212,20 @@ void wave_1_update()
                 }
             }
         }
-        if(enemy_list[i].pos.x > 790){
+        if (enemy_list[i].pos.x > 790)
+        {
             enemy_list[i].pos.x = 790;
         }
-        if(enemy_list[i].pos.y > 790){
+        if (enemy_list[i].pos.y > 790)
+        {
             enemy_list[i].pos.y = 790;
         }
-        if(enemy_list[i].pos.x < 0){
+        if (enemy_list[i].pos.x < 0)
+        {
             enemy_list[i].pos.x = 0;
         }
-        if(enemy_list[i].pos.y < 0){
+        if (enemy_list[i].pos.y < 0)
+        {
             enemy_list[i].pos.y = 0;
         }
         Rectangle scaled_sprites = {enemy_list[i].pos.x, enemy_list[i].pos.y, enemy_list[i].rect.width * ENEMY_SCALE, enemy_list[i].rect.height * ENEMY_SCALE};
@@ -233,5 +239,8 @@ void enemies_init()
 };
 
 void enemies_update() {
-
+    if(wave_state == 0){}
+    if(wave_state == 1){
+        wave_1_update();
+    }
 };

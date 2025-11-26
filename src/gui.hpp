@@ -13,6 +13,8 @@ extern std::vector<int> grid_spaces_y;
 
 extern int place_type;
 extern int menu_state;
+//Wave state
+extern int wave_state;
 
 extern Texture2D all_elements;
 
@@ -33,7 +35,7 @@ extern void gui_update();
 extern void draw_menu();
 extern void draw_menu_1_contents();
 extern void open_menu_1();
-extern void open_menu_2();
+
 extern void open_menu_3();
 
 extern int get_cell_mouse();

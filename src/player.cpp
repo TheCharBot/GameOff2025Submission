@@ -32,14 +32,8 @@ void player_init()
     player_tex = LoadTexture("gfx/walls/walls.png");
 }
 
-void player_update()
+void add_towers()
 {
-
-    if (place_type == 0)
-    {
-    }
-
-    // connector placement
     if (place_type == 1)
     {
         wall_place_pos.x = grid_spaces_x[get_cell_mouse()];
@@ -50,7 +44,7 @@ void player_update()
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
 
-            connector_index.push_back({basic_connector, {wall_place_pos.x, wall_place_pos.y, 32, 32}});
+            connector_index.push_back({basic_connector, {wall_place_pos.x, wall_place_pos.y, 32, 32}, 10});
 
             place_type = 0;
         }
@@ -89,15 +83,32 @@ void player_update()
             place_type = 0;
         }
     }
+};
+
+void player_update()
+{
+
+    if (place_type == 0)
+    {
+    }
+
+    if (place_type != 0)
+    {
+        add_towers();
+    }
+    // connector placement
 
     // drawing stored towers
 
     std::sort(connector_index.begin(), connector_index.end(), [](auto &a, auto &b)
-              { return a.where_to_draw_stuff_rect.y < b.where_to_draw_stuff_rect.y; });
+              { return a.rect.y < b.rect.y; });
 
     for (int i = 0; i < int(connector_index.size()); i++)
     {
-
+        if (connector_index[i].health <= 0)
+        {
+            connector_index.erase(connector_index.begin() + i);
+        };
         right = false;
         left = false;
         up = false;
@@ -106,13 +117,13 @@ void player_update()
         {
             if (i == j)
                 continue;
-            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y - 32)
+            if (connector_index[j].rect.x == connector_index[i].rect.x && connector_index[j].rect.y == connector_index[i].rect.y - 32)
                 up = true;
-            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y + 32)
+            if (connector_index[j].rect.x == connector_index[i].rect.x && connector_index[j].rect.y == connector_index[i].rect.y + 32)
                 down = true;
-            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x - 32 && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y)
+            if (connector_index[j].rect.x == connector_index[i].rect.x - 32 && connector_index[j].rect.y == connector_index[i].rect.y)
                 left = true;
-            if (connector_index[j].where_to_draw_stuff_rect.x == connector_index[i].where_to_draw_stuff_rect.x + 32 && connector_index[j].where_to_draw_stuff_rect.y == connector_index[i].where_to_draw_stuff_rect.y)
+            if (connector_index[j].rect.x == connector_index[i].rect.x + 32 && connector_index[j].rect.y == connector_index[i].rect.y)
                 right = true;
         }
         Rectangle sprite;
@@ -150,10 +161,10 @@ void player_update()
         else
             sprite = basic_connector;
 
-        connector_index[i].stuff_to_draw_rect = sprite;
-        Rectangle scaled_sprites = {connector_index[i].where_to_draw_stuff_rect.x, connector_index[i].where_to_draw_stuff_rect.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
+        connector_index[i].img_rect = sprite;
+        Rectangle scaled_sprites = {connector_index[i].rect.x, connector_index[i].rect.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
 
-        DrawTexturePro(player_tex, connector_index[i].stuff_to_draw_rect, scaled_sprites, default_rotation, 0, WHITE);
+        DrawTexturePro(player_tex, connector_index[i].img_rect, scaled_sprites, default_rotation, 0, WHITE);
     }
 
     for (int i = 0; i < int(range_index.size()); i++)
