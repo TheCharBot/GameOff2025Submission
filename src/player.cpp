@@ -31,6 +31,24 @@ bool left = false;
 bool up = false;
 bool down = false;
 
+bool is_cell_occupied(float x, float y)
+{
+    // Check connectors
+    for (auto &c : connector_index)
+        if (c.rect.x == x && c.rect.y == y) return true;
+
+    // Check range attackers
+    for (auto &r : range_index)
+        if (r.x == x && r.y == y) return true;
+
+    // Check melee attackers
+    for (auto &m : melee_index)
+        if (m.x == x && m.y == y) return true;
+
+    return false; // cell is free
+}
+
+
 void player_init()
 {
     player_tex = LoadTexture("gfx/walls/walls.png");
@@ -53,7 +71,7 @@ void add_towers()
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && can_place)
         {
             // Only place if we moved to a new grid square
-            if (cell != last_cell)
+            if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
             {
                 connector_index.push_back({basic_connector, {wall_place_pos.x, wall_place_pos.y, 32, 32}, 10});
 
@@ -82,7 +100,7 @@ void add_towers()
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && can_place)
         {
             // Only place if we moved to a new grid square
-            if (cell != last_cell)
+            if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
             {
                 range_index.push_back({wall_place_pos.x, wall_place_pos.y, 32, 32});
 
@@ -112,7 +130,7 @@ void add_towers()
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && can_place)
         {
             // Only place if we moved to a new grid square
-            if (cell != last_cell)
+            if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
             {
                 melee_index.push_back({wall_place_pos.x, wall_place_pos.y, 48, 32});
 
@@ -142,13 +160,12 @@ void player_update()
 
         add_towers();
     }
-    // connector placement
+  
 
     // drawing stored towers
 
     std::sort(connector_index.begin(), connector_index.end(), [](auto &a, auto &b)
               { return a.rect.y < b.rect.y; });
-
     for (int i = 0; i < int(connector_index.size()); i++)
     {
         if (connector_index[i].health <= 0)
@@ -214,14 +231,12 @@ void player_update()
     }
     std::sort(range_index.begin(), range_index.end(), [](auto &a, auto &b)
               { return a.y < b.y; });
-
     for (int i = 0; i < int(range_index.size()); i++)
     {
 
         Rectangle scaled_sprites = {range_index[i].x, range_index[i].y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
         DrawTexturePro(player_tex, range_attacker, scaled_sprites, default_rotation, 0, WHITE);
     }
-
     std::sort(melee_index.begin(), melee_index.end(), [](auto &a, auto &b)
               { return a.y < b.y; });
     for (int i = 0; i < int(melee_index.size()); i++)
