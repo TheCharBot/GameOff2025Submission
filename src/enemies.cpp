@@ -4,15 +4,16 @@ Texture2D enemy_tex;
 
 Vector2 target;
 
+int num = 0;
+
 std::vector<enemy> enemy_list;
 coordinate possible_spawnpoints[6] = {
     {0, 0},
     {0, 400},
-    {0, 750},
-    {750, 0},
-    {750, 400},
-    {750, 750}
-};
+    {0, 790},
+    {790, 0},
+    {790, 400},
+    {790, 790}};
 
 Rectangle scaled_sprites;
 
@@ -46,53 +47,118 @@ Rectangle lvl4_blue = {16, 176, LVL4_SPRITE_WIDTH, LVL4_SPRITE_HEIGHT};
 
 void wave_1_init()
 {
-    //setting target in a vector
+    // setting target in a vector
     target.x = 400;
     target.y = 400;
 
-    //making base enemy
+    // making base enemy
     enemy lvl1_base;
-    lvl1_base.speed = 10;
+
     lvl1_base.health = 5;
     lvl1_base.pos.x = 100;
     lvl1_base.pos.y = 100;
     // setting it to a base color, random later
     lvl1_base.img_rect = lvl1_green;
     lvl1_base.rect = {lvl1_base.pos.x, lvl1_base.pos.y, 7, 5};
-    
+
     for (int i = 0; i < WAVE_1_AMOUNT; i++)
     {
+
+        // image randomization
         int num = rand() % 6;
-        
-        if(num == 0){
+        if (num == 0)
+        {
             lvl1_base.img_rect = lvl1_green;
-            lvl1_base.pos.x = possible_spawnpoints[num].x;
-            lvl1_base.pos.y = possible_spawnpoints[num].y;
         }
-        if(num == 1){
+        if (num == 1)
+        {
             lvl1_base.img_rect = lvl1_pink;
-            lvl1_base.pos.x = possible_spawnpoints[num].x;
-            lvl1_base.pos.y = possible_spawnpoints[num].y;
         }
-        if(num == 2){
+        if (num == 2)
+        {
             lvl1_base.img_rect = lvl1_yellow;
-            lvl1_base.pos.x = possible_spawnpoints[num].x;
-            lvl1_base.pos.y = possible_spawnpoints[num].y;
         }
-        if(num == 3){
+        if (num == 3)
+        {
             lvl1_base.img_rect = lvl1_brown;
-            lvl1_base.pos.x = possible_spawnpoints[num].x;
-            lvl1_base.pos.y = possible_spawnpoints[num].y;
         }
-        if(num == 4){
+        if (num == 4)
+        {
             lvl1_base.img_rect = lvl1_red;
+        }
+        if (num == 5)
+        {
+            lvl1_base.img_rect = lvl1_blue;
+        }
+
+        // position randomization
+        num = rand() % 6;
+        if (num == 0)
+        {
             lvl1_base.pos.x = possible_spawnpoints[num].x;
             lvl1_base.pos.y = possible_spawnpoints[num].y;
         }
-        if(num == 5){
-            lvl1_base.img_rect = lvl1_blue;
+        if (num == 1)
+        {
+
             lvl1_base.pos.x = possible_spawnpoints[num].x;
             lvl1_base.pos.y = possible_spawnpoints[num].y;
+        }
+        if (num == 2)
+        {
+
+            lvl1_base.pos.x = possible_spawnpoints[num].x;
+            lvl1_base.pos.y = possible_spawnpoints[num].y;
+        }
+        if (num == 3)
+        {
+
+            lvl1_base.pos.x = possible_spawnpoints[num].x;
+            lvl1_base.pos.y = possible_spawnpoints[num].y;
+        }
+        if (num == 4)
+        {
+            lvl1_base.pos.x = possible_spawnpoints[num].x;
+            lvl1_base.pos.y = possible_spawnpoints[num].y;
+        }
+        if (num == 5)
+        {
+
+            lvl1_base.pos.x = possible_spawnpoints[num].x;
+            lvl1_base.pos.y = possible_spawnpoints[num].y;
+        }
+
+        // speed randomization
+        num = rand() % 6;
+        if (num == 0)
+        {
+
+            lvl1_base.speed = 100;
+        }
+        if (num == 1)
+        {
+
+            lvl1_base.speed = 80;
+        }
+        if (num == 2)
+        {
+
+            lvl1_base.speed = 60;
+        }
+        if (num == 3)
+        {
+
+            lvl1_base.speed = 40;
+        }
+        if (num == 4)
+        {
+
+            lvl1_base.speed = 30;
+        }
+        if (num == 5)
+        {
+
+            lvl1_base.speed = 75;
         }
         enemy_list.push_back(lvl1_base);
     }
@@ -103,21 +169,59 @@ void wave_1_update()
 
     for (int i = 0; i < int(enemy_list.size()); i++)
     {
+        
         for (int j = 0; j < int(connector_index.size()); j++)
         {
-            //works! like, too well!
-            //implement killing the clones here:
+            // works! like, too well!
+
+            // implement killing the clones here:
             if (CheckCollisionRecs(enemy_list[i].rect, connector_index[j].where_to_draw_stuff_rect))
             {
-                
             }
         }
 
-        //implement moving towards the center here:
+        // implement moving towards the center here:
         Vector2 dir = Vector2Normalize(Vector2Subtract(target, enemy_list[i].pos));
         enemy_list[i].pos = Vector2Add(enemy_list[i].pos, Vector2Scale(dir, enemy_list[i].speed * GetFrameTime()));
-
-        
+        enemy_list[i].rect.x = enemy_list[i].pos.x;
+        enemy_list[i].rect.y = enemy_list[i].pos.y;
+        for (int j = 0; j < int(enemy_list.size()); j++)
+        {
+            if(i == j) continue;
+            if (CheckCollisionRecs(enemy_list[i].rect, enemy_list[j].rect))
+            {
+                
+                num = rand() % 4;
+                if (num == 0)
+                {
+                    enemy_list[i].pos.x += enemy_list[j].rect.width;
+                }
+                if (num == 1)
+                {
+                    enemy_list[i].pos.x -= enemy_list[j].rect.width;
+                }
+                if (num == 2)
+                {
+                    enemy_list[i].pos.y += enemy_list[j].rect.height;
+                }
+                if (num == 3)
+                {
+                    enemy_list[i].pos.y -= enemy_list[j].rect.height;
+                }
+            }
+        }
+        if(enemy_list[i].pos.x > 790){
+            enemy_list[i].pos.x = 790;
+        }
+        if(enemy_list[i].pos.y > 790){
+            enemy_list[i].pos.y = 790;
+        }
+        if(enemy_list[i].pos.x < 0){
+            enemy_list[i].pos.x = 0;
+        }
+        if(enemy_list[i].pos.y < 0){
+            enemy_list[i].pos.y = 0;
+        }
         Rectangle scaled_sprites = {enemy_list[i].pos.x, enemy_list[i].pos.y, enemy_list[i].rect.width * ENEMY_SCALE, enemy_list[i].rect.height * ENEMY_SCALE};
         DrawTexturePro(enemy_tex, enemy_list[i].img_rect, scaled_sprites, default_rotation, 0, WHITE);
     }

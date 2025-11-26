@@ -52,7 +52,7 @@
 #define LVL4_SPRITE_WIDTH 16
 #define LVL4_SPRITE_HEIGHT 12
 #define ENEMY_SCALE 2
-#define WAVE_1_AMOUNT 1000
+#define WAVE_1_AMOUNT 100
 #define LVL_1_SPEED 10
 #define LVL_1_HEALTH 5
 
