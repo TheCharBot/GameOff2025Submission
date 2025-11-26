@@ -1,6 +1,9 @@
 # WAVEBREAK  
 My Entry for the Game Off 2025 Game Jam  
 
+# Progress
+ About 75% done  
+
 # Currently Working On  
 - Damage and health system  
 
@@ -17,4 +20,5 @@ My Entry for the Game Off 2025 Game Jam
 Art: Charles  
 Code: Charles  
 Music: Charles  
+
 
