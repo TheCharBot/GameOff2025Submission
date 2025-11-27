@@ -2,7 +2,7 @@
 My Entry for the Game Off 2025 Game Jam  
 
 # Progress
- About 75% done  
+ About 85% done  
 
 # Currently Working On  
 - Damage and health system  
