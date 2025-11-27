@@ -72,6 +72,8 @@ extern void enemies_update();
 extern void wave_initer_helper(enemy filler, int amount);
 extern void wave_1_init();
 extern void wave_2_init();
+extern void wave_3_init();
+extern void wave_4_init();
 extern void wave_update();
 
 #endif

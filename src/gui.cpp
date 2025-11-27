@@ -228,6 +228,21 @@ void Bottom_button::update()
                     wave_state = 2;
                     wave_2_init();
                 }
+                if (wave_state == 2.1)
+                {
+                    wave_state = 3;
+                    wave_3_init();
+                }
+                if (wave_state == 3.1)
+                {
+                    wave_state = 4;
+                    wave_4_init();
+                }
+                // if (wave_state == 4.1)
+                // {
+                //     wave_state = 5;
+                //     wave_5_init();
+                // }
             }
             if (self_index == 3)
             {

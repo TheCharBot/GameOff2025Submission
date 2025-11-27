@@ -67,6 +67,7 @@ int main()
 
         // updating gui
         gui_update();
+        
         EndDrawing();
     }
 
