@@ -438,6 +438,13 @@ void wave_update()
                 }
             }
         }
+
+        for(int j = 0; j < int(range_attack_area.size()); j++){
+            if(CheckCollisionRecs(enemy_list[i].rect, range_attack_area[j])){
+                DrawRectangle(enemy_list[i].rect.x, enemy_list[i].rect.y, 4, 10, RED);
+                enemy_list[i].health -= 0.1;
+            }
+        }
         if (enemy_list[i].health <= 0)
         {
             enemy_list.erase(enemy_list.begin() + i);
@@ -542,4 +549,53 @@ void enemies_update()
             wave_state = 4.1;
         }
     }
+    if (wave_state == 5)
+    {
+        wave_update();
+        if (enemy_list.size() == 0)
+        {
+            wave_state = 5.1;
+        }
+    }
+    if (wave_state == 6)
+    {
+        wave_update();
+        if (enemy_list.size() == 0)
+        {
+            wave_state = 6.1;
+        }
+    }
+    if (wave_state == 7)
+    {
+        wave_update();
+        if (enemy_list.size() == 0)
+        {
+            wave_state = 7.1;
+        }
+    }
+    if (wave_state == 8)
+    {
+        wave_update();
+        if (enemy_list.size() == 0)
+        {
+            wave_state = 8.1;
+        }
+    }
+    if (wave_state == 9)
+    {
+        wave_update();
+        if (enemy_list.size() == 0)
+        {
+            wave_state = 9.1;
+        }
+    }
+    if (wave_state == 10)
+    {
+        wave_update();
+        if (enemy_list.size() == 0)
+        {
+            wave_state = 10.1;
+        }
+    }
 };
+

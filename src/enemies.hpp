@@ -10,7 +10,7 @@ struct enemy
 {
     int self_index;
     int speed;
-    int health;
+    double health;
     Vector2 pos;
     Rectangle img_rect;
     Rectangle rect;

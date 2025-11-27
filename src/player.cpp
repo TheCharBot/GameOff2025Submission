@@ -7,6 +7,8 @@ Vector2 wall_place_pos;
 std::vector<sprite_pos_rects> connector_index = {};
 std::vector<tower_stats> range_index = {};
 std::vector<tower_stats> melee_index = {};
+std::vector<Rectangle> range_attack_area = {};
+
 
 int cell = get_cell_mouse();
 int last_cell = 0;
@@ -107,7 +109,7 @@ void add_towers()
             if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
             {
                 range_index.push_back({{wall_place_pos.x, wall_place_pos.y, 32, 32}, TOWER_HEALTH});
-
+                range_attack_area.push_back({wall_place_pos.x-(RANGER_RANGE*16), wall_place_pos.y-(RANGER_RANGE*16), RANGER_RANGE*32, RANGER_RANGE*32});
                 last_cell = cell; // remember last placed cell
             }
         }
@@ -233,26 +235,30 @@ void player_update()
         DrawTexturePro(player_tex, connector_index[i].img_rect, scaled_sprites, default_rotation, 0, WHITE);
     }
 
-    // melee stuff
+    // range stuff
     std::sort(range_index.begin(), range_index.end(), [](auto &a, auto &b)
               { return a.rect.y < b.rect.y; });
     for (int i = 0; i < int(range_index.size()); i++)
     {
+        // add range attacking here
+        
         if (range_index[i].health <= 0)
         {
             range_index.erase(range_index.begin() + i);
+            range_attack_area.erase(range_attack_area.begin() + i);
         };
+
         Rectangle scaled_sprites = {range_index[i].rect.x, range_index[i].rect.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
         DrawTexturePro(player_tex, range_attacker, scaled_sprites, default_rotation, 0, WHITE);
     }
 
-    // range stuff
+    // melee stuff
     std::sort(melee_index.begin(), melee_index.end(), [](auto &a, auto &b)
               { return a.rect.y < b.rect.y; });
     for (int i = 0; i < int(melee_index.size()); i++)
     {
 
-        // add range attacking here
+        
         if (melee_index[i].health <= 0)
         {
             melee_index.erase(melee_index.begin() + i);

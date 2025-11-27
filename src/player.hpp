@@ -13,13 +13,13 @@ struct sprite_pos_rects
 {
     Rectangle img_rect;
     Rectangle rect;
-    float health;
+    double health;
 };
 
 struct tower_stats
 {
     Rectangle rect;
-    int health;
+    double health;
 };
 
 extern Texture2D player_tex;
@@ -27,6 +27,7 @@ extern Texture2D player_tex;
 extern std::vector<sprite_pos_rects> connector_index;
 extern std::vector<tower_stats> range_index;
 extern std::vector<tower_stats> melee_index;
+extern std::vector<Rectangle> range_attack_area;
 
 extern Vector2 wall_place_pos;
 
