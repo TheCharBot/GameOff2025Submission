@@ -22,6 +22,9 @@ struct coordinate
     int y;
 };
 
+extern bool won;
+extern bool lost;
+
 extern Vector2 target;
 
 extern coordinate possible_spawnpoints[6];

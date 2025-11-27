@@ -6,6 +6,9 @@ Vector2 target;
 
 int num = 0;
 
+bool won = false;
+bool lost = false;
+
 std::vector<enemy> enemy_list;
 std::vector<enemy> empty_list = {};
 coordinate possible_spawnpoints[6] = {
@@ -598,5 +601,11 @@ void enemies_update()
         {
             wave_state = 10.1;
         }
+    }
+    if(wave_state >= 1 && connector_index.size() == 0 && range_index.size() == 0 && melee_index.size() == 0){
+        lost = true;
+    }
+    if(wave_state >= 10.1 && connector_index.size() >= 1 && range_index.size() >= 1 && melee_index.size() >= 1){
+        won = true;
     }
 };

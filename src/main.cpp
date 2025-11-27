@@ -41,6 +41,16 @@ int main()
         gui_update();
 
         EndDrawing();
+        if(won){
+            std::cout << "You Won!";
+            system("PAUSE");
+            break;
+        }
+        if(lost){
+            std::cout << "You Lose!";
+            system("PAUSE");
+            break;
+        }
     }
 
     CloseWindow();
