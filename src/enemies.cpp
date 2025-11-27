@@ -439,8 +439,10 @@ void wave_update()
             }
         }
 
-        for(int j = 0; j < int(range_attack_area.size()); j++){
-            if(CheckCollisionRecs(enemy_list[i].rect, range_attack_area[j])){
+        for (int j = 0; j < int(range_attack_area.size()); j++)
+        {
+            if (CheckCollisionRecs(enemy_list[i].rect, range_attack_area[j]))
+            {
                 DrawRectangle(enemy_list[i].rect.x, enemy_list[i].rect.y, 4, 10, RED);
                 enemy_list[i].health -= 0.1;
             }
@@ -598,4 +600,3 @@ void enemies_update()
         }
     }
 };
-

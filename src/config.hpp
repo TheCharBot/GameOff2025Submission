@@ -7,13 +7,13 @@
 #include <utility>
 #include <algorithm>
 #include <bits/stdc++.h>
-#include <stdlib.h> 
+#include <stdlib.h>
 
 // Global-focused macros
 #define SCREEN_HEIGHT 800
 #define SCREEN_WIDTH 800
 
-//GUI-focused macros
+// GUI-focused macros
 #define SLOT_1_X 309
 #define SLOT_2_X 373
 #define SLOT_3_X 437
@@ -26,14 +26,13 @@
 #define MENU_OFFSET_X 232
 #define MENU_OFFSET_Y 256
 
-//Wall-focused macros 
+// Wall-focused macros
 #define WALL_SPRITE_HEIGHT 32
 #define WALL_SPRITE_WIDTH 16
 #define WALL_SCALE 2
 #define GRID_SPACE 32
 
-
-//Player-focused macros
+// Player-focused macros
 #define TOWER_HEALTH 10
 #define RANGER_RANGE 4
 #define RANGER_DAMAGE 4
@@ -42,7 +41,7 @@
 #define MELEE_DAMAGE 8
 #define CORE_HEALTH 100;
 
-//Enemy-focused macros
+// Enemy-focused macros
 #define ENEMY_SCALE 2
 #define LVL1_SPRITE_WIDTH 7
 #define LVL1_SPRITE_HEIGHT 5
@@ -62,7 +61,7 @@
 
 #define KNOCKBACK 25
 
-//Wave-focused macros
+// Wave-focused macros
 #define WAVE_1_AMOUNT 1000
 
 #define WAVE_2_AMOUNT 1200

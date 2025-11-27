@@ -9,7 +9,6 @@ std::vector<tower_stats> range_index = {};
 std::vector<tower_stats> melee_index = {};
 std::vector<Rectangle> range_attack_area = {};
 
-
 int cell = get_cell_mouse();
 int last_cell = 0;
 int can_place = false;
@@ -109,7 +108,7 @@ void add_towers()
             if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
             {
                 range_index.push_back({{wall_place_pos.x, wall_place_pos.y, 32, 32}, TOWER_HEALTH});
-                range_attack_area.push_back({wall_place_pos.x-(RANGER_RANGE*16), wall_place_pos.y-(RANGER_RANGE*16), RANGER_RANGE*32, RANGER_RANGE*32});
+                range_attack_area.push_back({wall_place_pos.x - (RANGER_RANGE * 16), wall_place_pos.y - (RANGER_RANGE * 16), RANGER_RANGE * 32, RANGER_RANGE * 32});
                 last_cell = cell; // remember last placed cell
             }
         }
@@ -241,7 +240,7 @@ void player_update()
     for (int i = 0; i < int(range_index.size()); i++)
     {
         // add range attacking here
-        
+
         if (range_index[i].health <= 0)
         {
             range_index.erase(range_index.begin() + i);
@@ -258,7 +257,6 @@ void player_update()
     for (int i = 0; i < int(melee_index.size()); i++)
     {
 
-        
         if (melee_index[i].health <= 0)
         {
             melee_index.erase(melee_index.begin() + i);
