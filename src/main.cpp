@@ -30,7 +30,6 @@
 // defense: blocks your attacks when active, decently easy to dodge
 #include "raylib.h"
 
-
 #include "gui.hpp"
 #include "player.hpp"
 #include "enemies.hpp"
@@ -45,35 +44,33 @@ int main()
     UnloadImage(icon);
     SetTargetFPS(60);
 
-    //initing stuff
+    // initing stuff
     gui_init();
     player_init();
-    
+
     enemies_init();
-    //generating grid
+    // generating grid
     gen_grid_coords();
-    
+
     // Game Loop
     while (WindowShouldClose() == false)
     {
         // Game Logic
-        
+
         BeginDrawing();
         DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
-        
-        //updating stuff
-        
+
+        // updating stuff
+
         player_update();
         enemies_update();
-        
-        
-        
-        //updating gui
+
+        // updating gui
         gui_update();
         EndDrawing();
     }
-    
+
     CloseWindow();
-    
+
     return 0;
 }

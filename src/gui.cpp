@@ -3,10 +3,10 @@
 #include "config.hpp"
 #include "enemies.hpp"
 
-//0 for null, 1 for basic tower, 2 for ranged, 3 for melee tower
+// 0 for null, 1 for basic tower, 2 for ranged, 3 for melee tower
 int place_type = 0;
 int menu_state = 0;
-int wave_state = 0;
+double wave_state = 0;
 
 Bottom_button button_1;
 Bottom_button button_2;
@@ -22,8 +22,7 @@ Vector2 slot_1_position;
 Rectangle tower_menu_rects[3] = {
     {MENU_OFFSET_X + 12, MENU_OFFSET_Y + 12, 54, 54},
     {MENU_OFFSET_X + 78, MENU_OFFSET_Y + 12, 54, 54},
-    {MENU_OFFSET_X + 144, MENU_OFFSET_Y + 12, 54, 54}
-};
+    {MENU_OFFSET_X + 144, MENU_OFFSET_Y + 12, 54, 54}};
 Rectangle elements[7] = {
     {0, 0, 18, 18},
     {32, 0, 32, 32},
@@ -31,14 +30,11 @@ Rectangle elements[7] = {
     {0, 32, 112, 96},
     {96, 0, 16, 16},
     {128, 0, 18, 18},
-    {160, 0, 18, 18}
-};
+    {160, 0, 18, 18}};
 Rectangle exit_rect = {EXIT_X, EXIT_Y, 48, 48};
 
 std::vector<int> grid_spaces_x = {};
 std::vector<int> grid_spaces_y = {};
-
-
 
 void gui_init()
 {
@@ -59,7 +55,7 @@ void gui_update()
     {
         open_menu_1();
     }
-    
+
     if (menu_state == 3)
     {
         open_menu_3();
@@ -70,23 +66,21 @@ void gui_update()
     button_3.update();
 }
 
-
-
-void draw_menu(){
+void draw_menu()
+{
     Rectangle scaled_sprite = {menu_position.x, menu_position.y, elements[3].width * GUI_SCALE, elements[3].height * GUI_SCALE};
     DrawTexturePro(all_elements, elements[3], scaled_sprite, default_rotation, 0, WHITE);
     scaled_sprite = {exit_position.x, exit_position.y, elements[4].width * GUI_SCALE, elements[4].height * GUI_SCALE};
     DrawTexturePro(all_elements, elements[4], scaled_sprite, default_rotation, 0, WHITE);
 };
 
-void draw_menu_1_contents(){
+void draw_menu_1_contents()
+{
     Rectangle scaled_sprites = {tower_menu_rects[0].x, tower_menu_rects[0].y, elements[0].width * GUI_SCALE, elements[0].height * GUI_SCALE};
     DrawTexturePro(all_elements, elements[0], scaled_sprites, default_rotation, 0, WHITE);
 
-
     scaled_sprites = {tower_menu_rects[1].x, tower_menu_rects[1].y, elements[5].width * GUI_SCALE, elements[5].height * GUI_SCALE};
     DrawTexturePro(all_elements, elements[5], scaled_sprites, default_rotation, 0, WHITE);
-
 
     scaled_sprites = {tower_menu_rects[2].x, tower_menu_rects[2].y, elements[6].width * GUI_SCALE, elements[6].height * GUI_SCALE};
     DrawTexturePro(all_elements, elements[6], scaled_sprites, default_rotation, 0, WHITE);
@@ -165,8 +159,6 @@ void draw_grid()
     }
 }
 
-
-
 int get_cell_mouse()
 {
     int gx = (GetMousePosition().x - 16) / GRID_SPACE;
@@ -179,8 +171,6 @@ int get_cell_mouse()
 
     return gy * cells_x + gx;
 }
-
-
 
 void Bottom_button::init(int index)
 {
@@ -224,13 +214,20 @@ void Bottom_button::update()
             if (self_index == 2)
             {
                 menu_state = 0;
-                if(wave_state == 1){}
-                if(wave_state != 1){
+
+                if (wave_state == 0)
+                {
                     wave_state = 1;
                     wave_1_init();
                 }
-                
-
+                if (wave_state == 1)
+                {
+                }
+                if (wave_state == 1.1)
+                {
+                    wave_state = 2;
+                    wave_2_init();
+                }
             }
             if (self_index == 3)
             {

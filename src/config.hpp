@@ -37,25 +37,31 @@
 #define TOWER_HEALTH 10
 #define RANGER_RANGE 4
 #define RANGER_DAMAGE 4
+#define RANGE_COOLDOWN_MS 25
 #define MELEE_RANGE 1
 #define MELEE_DAMAGE 8
+#define CORE_HEALTH 100;
 
 //Enemy-focused macros
 #define ENEMY_SCALE 2
 #define LVL1_SPRITE_WIDTH 7
 #define LVL1_SPRITE_HEIGHT 5
+#define LVL_1_SPEED 10
+#define LVL_1_HEALTH 5
+#define LVL_2_HEALTH 10
 #define LVL2_SPRITE_WIDTH 9
 #define LVL2_SPRITE_HEIGHT 7
 #define LVL3_SPRITE_WIDTH 11
 #define LVL3_SPRITE_HEIGHT 8
 #define LVL4_SPRITE_WIDTH 16
 #define LVL4_SPRITE_HEIGHT 12
-#define LVL_1_SPEED 10
-#define LVL_1_HEALTH 5
-#define LVL_2_HEALTH 10
 #define KNOCKBACK 25
 
 //Wave-focused macros
-#define WAVE_1_AMOUNT 100
+#define WAVE_1_AMOUNT 1000
+
+#define WAVE_2_AMOUNT 1200
+#define WAVE_2_LVL1_AMOUNT 600
+#define WAVE_2_LVL2_AMOUNT 600
 
 #endif

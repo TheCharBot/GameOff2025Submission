@@ -16,11 +16,11 @@ struct enemy
     Rectangle rect;
 };
 
-struct coordinate{
-    int x; 
+struct coordinate
+{
+    int x;
     int y;
 };
-
 
 extern Vector2 target;
 
@@ -69,7 +69,9 @@ extern Rectangle lvl4_blue;
 extern void enemies_init();
 extern void enemies_update();
 
+extern void wave_initer_helper(enemy filler, int amount);
 extern void wave_1_init();
-extern void wave_1_update();
+extern void wave_2_init();
+extern void wave_update();
 
 #endif

@@ -5,8 +5,8 @@ Texture2D player_tex;
 Vector2 wall_place_pos;
 
 std::vector<sprite_pos_rects> connector_index = {};
-std::vector<Rectangle> range_index = {};
-std::vector<Rectangle> melee_index = {};
+std::vector<tower_stats> range_index = {};
+std::vector<tower_stats> melee_index = {};
 
 int cell = get_cell_mouse();
 int last_cell = 0;
@@ -25,7 +25,9 @@ Rectangle down_left_right_connector = {32, 64, WALL_SPRITE_WIDTH, WALL_SPRITE_HE
 Rectangle up_down_wall = {64, 64, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
 Rectangle range_attacker = {0, 96, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
 Rectangle melee_attacker = {16, 96, 48, WALL_SPRITE_HEIGHT};
+Rectangle core = {96, 64, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
 
+Rectangle core_scaled = {392, 384, 32, 64};
 bool right = false;
 bool left = false;
 bool up = false;
@@ -35,19 +37,21 @@ bool is_cell_occupied(float x, float y)
 {
     // Check connectors
     for (auto &c : connector_index)
-        if (c.rect.x == x && c.rect.y == y) return true;
+        if (c.rect.x == x && c.rect.y == y)
+            return true;
 
     // Check range attackers
     for (auto &r : range_index)
-        if (r.x == x && r.y == y) return true;
+        if (r.rect.x == x && r.rect.y == y)
+            return true;
 
     // Check melee attackers
     for (auto &m : melee_index)
-        if (m.x == x && m.y == y) return true;
+        if (m.rect.x == x && m.rect.y == y)
+            return true;
 
     return false; // cell is free
 }
-
 
 void player_init()
 {
@@ -73,7 +77,7 @@ void add_towers()
             // Only place if we moved to a new grid square
             if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
             {
-                connector_index.push_back({basic_connector, {wall_place_pos.x, wall_place_pos.y, 32, 32}, 10});
+                connector_index.push_back({basic_connector, {wall_place_pos.x, wall_place_pos.y, 32, 32}, TOWER_HEALTH});
 
                 last_cell = cell; // remember last placed cell
             }
@@ -102,7 +106,7 @@ void add_towers()
             // Only place if we moved to a new grid square
             if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
             {
-                range_index.push_back({wall_place_pos.x, wall_place_pos.y, 32, 32});
+                range_index.push_back({{wall_place_pos.x, wall_place_pos.y, 32, 32}, TOWER_HEALTH});
 
                 last_cell = cell; // remember last placed cell
             }
@@ -132,7 +136,7 @@ void add_towers()
             // Only place if we moved to a new grid square
             if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
             {
-                melee_index.push_back({wall_place_pos.x, wall_place_pos.y, 48, 32});
+                melee_index.push_back({{wall_place_pos.x, wall_place_pos.y, 48, 32}, TOWER_HEALTH});
 
                 last_cell = cell; // remember last placed cell
             }
@@ -160,10 +164,9 @@ void player_update()
 
         add_towers();
     }
-  
 
     // drawing stored towers
-
+    // connector stuff
     std::sort(connector_index.begin(), connector_index.end(), [](auto &a, auto &b)
               { return a.rect.y < b.rect.y; });
     for (int i = 0; i < int(connector_index.size()); i++)
@@ -229,20 +232,34 @@ void player_update()
 
         DrawTexturePro(player_tex, connector_index[i].img_rect, scaled_sprites, default_rotation, 0, WHITE);
     }
+
+    // melee stuff
     std::sort(range_index.begin(), range_index.end(), [](auto &a, auto &b)
-              { return a.y < b.y; });
+              { return a.rect.y < b.rect.y; });
     for (int i = 0; i < int(range_index.size()); i++)
     {
-
-        Rectangle scaled_sprites = {range_index[i].x, range_index[i].y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
+        if (range_index[i].health <= 0)
+        {
+            range_index.erase(range_index.begin() + i);
+        };
+        Rectangle scaled_sprites = {range_index[i].rect.x, range_index[i].rect.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
         DrawTexturePro(player_tex, range_attacker, scaled_sprites, default_rotation, 0, WHITE);
     }
+
+    // range stuff
     std::sort(melee_index.begin(), melee_index.end(), [](auto &a, auto &b)
-              { return a.y < b.y; });
+              { return a.rect.y < b.rect.y; });
     for (int i = 0; i < int(melee_index.size()); i++)
     {
 
-        Rectangle scaled_sprites = {melee_index[i].x, melee_index[i].y, float(48 * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
+        // add range attacking here
+        if (melee_index[i].health <= 0)
+        {
+            melee_index.erase(melee_index.begin() + i);
+        };
+        Rectangle scaled_sprites = {melee_index[i].rect.x, melee_index[i].rect.y, float(48 * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
         DrawTexturePro(player_tex, melee_attacker, scaled_sprites, default_rotation, 0, WHITE);
     }
+
+    // DrawTexturePro(player_tex, core, core_scaled, default_rotation, 0, WHITE);
 }

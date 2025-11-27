@@ -46,11 +46,114 @@ Rectangle lvl4_brown = {16, 160, LVL4_SPRITE_WIDTH, LVL4_SPRITE_HEIGHT};
 Rectangle lvl4_red = {0, 176, LVL4_SPRITE_WIDTH, LVL4_SPRITE_HEIGHT};
 Rectangle lvl4_blue = {16, 176, LVL4_SPRITE_WIDTH, LVL4_SPRITE_HEIGHT};
 
+void wave_initer_helper(enemy filler, int amount)
+{
+    for (int i = 0; i < amount; i++)
+    {
+        // image randomization
+        int num = rand() % 6;
+        if (num == 0)
+        {
+            filler.img_rect = lvl1_green;
+        }
+        if (num == 1)
+        {
+            filler.img_rect = lvl1_pink;
+        }
+        if (num == 2)
+        {
+            filler.img_rect = lvl1_yellow;
+        }
+        if (num == 3)
+        {
+            filler.img_rect = lvl1_brown;
+        }
+        if (num == 4)
+        {
+            filler.img_rect = lvl1_red;
+        }
+        if (num == 5)
+        {
+            filler.img_rect = lvl1_blue;
+        }
+
+        // position randomization
+        num = rand() % 6;
+        if (num == 0)
+        {
+            filler.pos.x = possible_spawnpoints[num].x;
+            filler.pos.y = possible_spawnpoints[num].y;
+        }
+        if (num == 1)
+        {
+
+            filler.pos.x = possible_spawnpoints[num].x;
+            filler.pos.y = possible_spawnpoints[num].y;
+        }
+        if (num == 2)
+        {
+
+            filler.pos.x = possible_spawnpoints[num].x;
+            filler.pos.y = possible_spawnpoints[num].y;
+        }
+        if (num == 3)
+        {
+
+            filler.pos.x = possible_spawnpoints[num].x;
+            filler.pos.y = possible_spawnpoints[num].y;
+        }
+        if (num == 4)
+        {
+            filler.pos.x = possible_spawnpoints[num].x;
+            filler.pos.y = possible_spawnpoints[num].y;
+        }
+        if (num == 5)
+        {
+
+            filler.pos.x = possible_spawnpoints[num].x;
+            filler.pos.y = possible_spawnpoints[num].y;
+        }
+
+        // speed randomization
+        num = rand() % 6;
+        if (num == 0)
+        {
+
+            filler.speed = 100;
+        }
+        if (num == 1)
+        {
+
+            filler.speed = 80;
+        }
+        if (num == 2)
+        {
+
+            filler.speed = 60;
+        }
+        if (num == 3)
+        {
+
+            filler.speed = 40;
+        }
+        if (num == 4)
+        {
+
+            filler.speed = 30;
+        }
+        if (num == 5)
+        {
+
+            filler.speed = 75;
+        }
+        enemy_list.push_back(filler);
+    }
+};
+
 void wave_1_init()
 {
+    enemy_list.clear();
     // setting target in a vector
-    target.x = 400;
-    target.y = 400;
 
     // making base enemy
     enemy lvl1_base;
@@ -62,116 +165,42 @@ void wave_1_init()
     lvl1_base.img_rect = lvl1_green;
     lvl1_base.rect = {lvl1_base.pos.x, lvl1_base.pos.y, 7, 5};
 
-    for (int i = 0; i < WAVE_1_AMOUNT; i++)
-    {
+    wave_initer_helper(lvl1_base, WAVE_1_AMOUNT);
+}
 
-        // image randomization
-        int num = rand() % 6;
-        if (num == 0)
-        {
-            lvl1_base.img_rect = lvl1_green;
-        }
-        if (num == 1)
-        {
-            lvl1_base.img_rect = lvl1_pink;
-        }
-        if (num == 2)
-        {
-            lvl1_base.img_rect = lvl1_yellow;
-        }
-        if (num == 3)
-        {
-            lvl1_base.img_rect = lvl1_brown;
-        }
-        if (num == 4)
-        {
-            lvl1_base.img_rect = lvl1_red;
-        }
-        if (num == 5)
-        {
-            lvl1_base.img_rect = lvl1_blue;
-        }
+void wave_2_init()
+{
+    enemy_list.clear();
+    // setting target in a vector
 
-        // position randomization
-        num = rand() % 6;
-        if (num == 0)
-        {
-            lvl1_base.pos.x = possible_spawnpoints[num].x;
-            lvl1_base.pos.y = possible_spawnpoints[num].y;
-        }
-        if (num == 1)
-        {
+    // making base enemy
+    // setting it to a base color, random later
+    enemy lvl1_base;
 
-            lvl1_base.pos.x = possible_spawnpoints[num].x;
-            lvl1_base.pos.y = possible_spawnpoints[num].y;
-        }
-        if (num == 2)
-        {
+    lvl1_base.health = LVL_1_HEALTH;
+    lvl1_base.pos.x = 0;
+    lvl1_base.pos.y = 0;
+    lvl1_base.img_rect = lvl1_green;
+    lvl1_base.rect = {lvl1_base.pos.x, lvl1_base.pos.y, 7, 5};
 
-            lvl1_base.pos.x = possible_spawnpoints[num].x;
-            lvl1_base.pos.y = possible_spawnpoints[num].y;
-        }
-        if (num == 3)
-        {
+    enemy lvl2_base;
+    lvl2_base.health = LVL_2_HEALTH;
+    lvl2_base.pos.x = 0;
+    lvl2_base.pos.y = 0;
+    lvl2_base.img_rect = lvl2_green;
+    lvl2_base.rect = {lvl2_base.pos.x, lvl2_base.pos.y, 9, 7};
 
-            lvl1_base.pos.x = possible_spawnpoints[num].x;
-            lvl1_base.pos.y = possible_spawnpoints[num].y;
-        }
-        if (num == 4)
-        {
-            lvl1_base.pos.x = possible_spawnpoints[num].x;
-            lvl1_base.pos.y = possible_spawnpoints[num].y;
-        }
-        if (num == 5)
-        {
-
-            lvl1_base.pos.x = possible_spawnpoints[num].x;
-            lvl1_base.pos.y = possible_spawnpoints[num].y;
-        }
-
-        // speed randomization
-        num = rand() % 6;
-        if (num == 0)
-        {
-
-            lvl1_base.speed = 100;
-        }
-        if (num == 1)
-        {
-
-            lvl1_base.speed = 80;
-        }
-        if (num == 2)
-        {
-
-            lvl1_base.speed = 60;
-        }
-        if (num == 3)
-        {
-
-            lvl1_base.speed = 40;
-        }
-        if (num == 4)
-        {
-
-            lvl1_base.speed = 30;
-        }
-        if (num == 5)
-        {
-
-            lvl1_base.speed = 75;
-        }
-        enemy_list.push_back(lvl1_base);
-    }
+    wave_initer_helper(lvl1_base, WAVE_2_LVL1_AMOUNT);
+    wave_initer_helper(lvl2_base, WAVE_2_LVL2_AMOUNT);
 }
 
 void wave_update()
 {
-    //does the stuff for every enemy instance
+    // does the stuff for every enemy instance
     for (int i = 0; i < int(enemy_list.size()); i++)
     {
 
-        //damage-related checkers
+        // damage-related checkers
         for (int j = 0; j < int(connector_index.size()); j++)
         {
             // works! like, too well!
@@ -180,50 +209,83 @@ void wave_update()
             if (CheckCollisionRecs(enemy_list[i].rect, connector_index[j].rect))
             {
                 connector_index[j].health -= 0.1;
-                if(enemy_list[i].pos.x < 400){
-                    enemy_list[i].pos.x-=KNOCKBACK;
+                if (enemy_list[i].pos.x < 400)
+                {
+                    enemy_list[i].pos.x -= KNOCKBACK;
                 }
-                else if(enemy_list[i].pos.x > 400){
-                    enemy_list[i].pos.x+=KNOCKBACK;
+                else if (enemy_list[i].pos.x > 400)
+                {
+                    enemy_list[i].pos.x += KNOCKBACK;
                 }
-                if(enemy_list[i].pos.y < 400){
-                    enemy_list[i].pos.y-=KNOCKBACK;
+                if (enemy_list[i].pos.y < 400)
+                {
+                    enemy_list[i].pos.y -= KNOCKBACK;
                 }
-                else if(enemy_list[i].pos.y > 400){
-                    enemy_list[i].pos.y+=KNOCKBACK;
+                else if (enemy_list[i].pos.y > 400)
+                {
+                    enemy_list[i].pos.y += KNOCKBACK;
                 }
             }
-            
         }
         for (int j = 0; j < int(melee_index.size()); j++)
         {
-            if (CheckCollisionRecs(enemy_list[i].rect, melee_index[j]))
+            if (CheckCollisionRecs(enemy_list[i].rect, melee_index[j].rect))
             {
                 enemy_list[i].health -= 5;
-                if(enemy_list[i].pos.x < 400){
-                    enemy_list[i].pos.x-=KNOCKBACK;
+                melee_index[j].health -= 0.05;
+                if (enemy_list[i].pos.x < 400)
+                {
+                    enemy_list[i].pos.x -= KNOCKBACK;
                 }
-                else if(enemy_list[i].pos.x > 400){
-                    enemy_list[i].pos.x+=KNOCKBACK;
+                else if (enemy_list[i].pos.x > 400)
+                {
+                    enemy_list[i].pos.x += KNOCKBACK;
                 }
-                if(enemy_list[i].pos.y < 400){
-                    enemy_list[i].pos.y-=KNOCKBACK;
+                if (enemy_list[i].pos.y < 400)
+                {
+                    enemy_list[i].pos.y -= KNOCKBACK;
                 }
-                else if(enemy_list[i].pos.y > 400){
-                    enemy_list[i].pos.y+=KNOCKBACK;
+                else if (enemy_list[i].pos.y > 400)
+                {
+                    enemy_list[i].pos.y += KNOCKBACK;
                 }
             }
         }
-        if(enemy_list[i].health <= 0){
+        for (int j = 0; j < int(range_index.size()); j++)
+        {
+            if (CheckCollisionRecs(enemy_list[i].rect, range_index[j].rect))
+            {
+                enemy_list[i].health -= 1;
+                range_index[j].health -= 1;
+                if (enemy_list[i].pos.x < 400)
+                {
+                    enemy_list[i].pos.x -= KNOCKBACK;
+                }
+                else if (enemy_list[i].pos.x > 400)
+                {
+                    enemy_list[i].pos.x += KNOCKBACK;
+                }
+                if (enemy_list[i].pos.y < 400)
+                {
+                    enemy_list[i].pos.y -= KNOCKBACK;
+                }
+                else if (enemy_list[i].pos.y > 400)
+                {
+                    enemy_list[i].pos.y += KNOCKBACK;
+                }
+            }
+        }
+        if (enemy_list[i].health <= 0)
+        {
             enemy_list.erase(enemy_list.begin() + i);
         }
-        //moving towards the center and other movement calculations
+        // moving towards the center and other movement calculations
         Vector2 dir = Vector2Normalize(Vector2Subtract(target, enemy_list[i].pos));
         enemy_list[i].pos = Vector2Add(enemy_list[i].pos, Vector2Scale(dir, enemy_list[i].speed * GetFrameTime()));
         enemy_list[i].rect.x = enemy_list[i].pos.x;
         enemy_list[i].rect.y = enemy_list[i].pos.y;
 
-        //enemy-to enemy collision checks to reduce clipping
+        // enemy-to enemy collision checks to reduce clipping
         for (int j = 0; j < int(enemy_list.size()); j++)
         {
             if (i == j)
@@ -250,8 +312,8 @@ void wave_update()
                 }
             }
         }
-        
-        //keeping the clones inside the screen
+
+        // keeping the clones inside the screen
         if (enemy_list[i].pos.x > 790)
         {
             enemy_list[i].pos.x = 790;
@@ -276,14 +338,21 @@ void wave_update()
 void enemies_init()
 {
     enemy_tex = LoadTexture("gfx/enemies/enemies.png");
+    target.x = 400;
+    target.y = 400;
 };
 
-void enemies_update() {
-    if(wave_state == 0){}
-    if(wave_state == 1){
+void enemies_update()
+{
+    if (wave_state == 0)
+    {
+    }
+    if (wave_state == 1)
+    {
         wave_update();
-        if(enemy_list.size() == 0){
-            wave_state = 0;
+        if (enemy_list.size() == 0)
+        {
+            wave_state = 1.1;
         }
     }
 };

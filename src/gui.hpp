@@ -3,18 +3,16 @@
 
 #include "raylib.h"
 
-
 #include "config.hpp"
 #include <vector>
-
 
 extern std::vector<int> grid_spaces_x;
 extern std::vector<int> grid_spaces_y;
 
 extern int place_type;
 extern int menu_state;
-//Wave state
-extern int wave_state;
+// Wave state - 0 for the start, 1 for the 1st wave, 1.1 for after fist wave, 2 for 2nd wave, 2.1 for after second wave, etc
+extern double wave_state;
 
 extern Texture2D all_elements;
 
@@ -31,7 +29,6 @@ extern Vector2 default_rotation;
 extern void gui_init();
 extern void gui_update();
 
-
 extern void draw_menu();
 extern void draw_menu_1_contents();
 extern void open_menu_1();
@@ -43,10 +40,9 @@ extern int get_cell_mouse();
 extern void gen_grid_coords();
 extern void draw_grid();
 
-
-
-class Bottom_button{
-    public:
+class Bottom_button
+{
+public:
     int x;
     int y;
     int self_index;
