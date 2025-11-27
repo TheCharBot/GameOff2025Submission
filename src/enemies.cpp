@@ -194,7 +194,8 @@ void wave_2_init()
     wave_initer_helper(lvl2_base, WAVE_2_LVL2_AMOUNT);
 }
 
-void wave_3_init(){
+void wave_3_init()
+{
     enemy_list.clear();
     // setting target in a vector
 
@@ -225,16 +226,16 @@ void wave_3_init(){
     wave_initer_helper(lvl1_base, WAVE_3_LVL1_AMOUNT);
     wave_initer_helper(lvl2_base, WAVE_3_LVL2_AMOUNT);
     wave_initer_helper(lvl3_base, WAVE_3_LVL3_AMOUNT);
-
 }
 
-void wave_4_init(){
+void wave_4_init()
+{
     enemy_list.clear();
     // setting target in a vector
 
     // making base enemy
     // setting it to a base color, random later
-    
+
     enemy lvl3_base;
     lvl3_base.health = LVL_3_HEALTH;
     lvl3_base.pos.x = 0;
@@ -243,7 +244,7 @@ void wave_4_init(){
     lvl3_base.rect = {lvl3_base.pos.x, lvl3_base.pos.y, LVL3_SPRITE_WIDTH, LVL3_SPRITE_HEIGHT};
 
     enemy lvl4_base;
-    lvl4_base.health = LVL_3_HEALTH;
+    lvl4_base.health = LVL_4_HEALTH;
     lvl4_base.pos.x = 0;
     lvl4_base.pos.y = 0;
     lvl4_base.img_rect = lvl2_green;
@@ -251,8 +252,109 @@ void wave_4_init(){
 
     wave_initer_helper(lvl3_base, WAVE_4_LVL3_AMOUNT);
     wave_initer_helper(lvl4_base, WAVE_4_LVL4_AMOUNT);
-   
+}
 
+void wave_5_init()
+{
+    enemy_list.clear();
+    // setting target in a vector
+
+    // making base enemy
+    // setting it to a base color, random later
+
+    enemy lvl3_base;
+    lvl3_base.health = LVL_3_HEALTH;
+    lvl3_base.pos.x = 0;
+    lvl3_base.pos.y = 0;
+    lvl3_base.img_rect = lvl2_green;
+    lvl3_base.rect = {lvl3_base.pos.x, lvl3_base.pos.y, LVL3_SPRITE_WIDTH, LVL3_SPRITE_HEIGHT};
+
+    enemy lvl4_base;
+    lvl4_base.health = LVL_4_HEALTH;
+    lvl4_base.pos.x = 0;
+    lvl4_base.pos.y = 0;
+    lvl4_base.img_rect = lvl2_green;
+    lvl4_base.rect = {lvl4_base.pos.x, lvl4_base.pos.y, LVL4_SPRITE_WIDTH, LVL4_SPRITE_HEIGHT};
+
+    wave_initer_helper(lvl3_base, WAVE_5_LVL3_AMOUNT);
+    wave_initer_helper(lvl4_base, WAVE_5_LVL4_AMOUNT);
+}
+
+void wave_6_init()
+{
+    enemy_list.clear();
+    // setting target in a vector
+
+    // making base enemy
+    // setting it to a base color, random later
+
+    enemy lvl3_base;
+    lvl3_base.health = LVL_3_HEALTH;
+    lvl3_base.pos.x = 0;
+    lvl3_base.pos.y = 0;
+    lvl3_base.img_rect = lvl2_green;
+    lvl3_base.rect = {lvl3_base.pos.x, lvl3_base.pos.y, LVL3_SPRITE_WIDTH, LVL3_SPRITE_HEIGHT};
+
+    enemy lvl4_base;
+    lvl4_base.health = LVL_4_HEALTH;
+    lvl4_base.pos.x = 0;
+    lvl4_base.pos.y = 0;
+    lvl4_base.img_rect = lvl2_green;
+    lvl4_base.rect = {lvl4_base.pos.x, lvl4_base.pos.y, LVL4_SPRITE_WIDTH, LVL4_SPRITE_HEIGHT};
+
+    wave_initer_helper(lvl3_base, WAVE_6_LVL3_AMOUNT);
+    wave_initer_helper(lvl4_base, WAVE_6_LVL4_AMOUNT);
+}
+
+void wave_7_init()
+{
+    enemy_list.clear();
+    // setting target in a vector
+
+    // making base enemy
+    // setting it to a base color, random later
+
+    enemy lvl4_base;
+    lvl4_base.health = LVL_4_HEALTH;
+    lvl4_base.pos.x = 0;
+    lvl4_base.pos.y = 0;
+    lvl4_base.img_rect = lvl2_green;
+    lvl4_base.rect = {lvl4_base.pos.x, lvl4_base.pos.y, LVL4_SPRITE_WIDTH, LVL4_SPRITE_HEIGHT};
+    wave_initer_helper(lvl4_base, WAVE_7_LVL4_AMOUNT);
+}
+
+void wave_8_init()
+{
+
+    enemy lvl4_base;
+    lvl4_base.health = LVL_4_HEALTH;
+    lvl4_base.pos.x = 0;
+    lvl4_base.pos.y = 0;
+    lvl4_base.img_rect = lvl2_green;
+    lvl4_base.rect = {lvl4_base.pos.x, lvl4_base.pos.y, LVL4_SPRITE_WIDTH, LVL4_SPRITE_HEIGHT};
+    wave_initer_helper(lvl4_base, WAVE_8_LVL4_AMOUNT);
+}
+
+void wave_9_init()
+{
+    enemy lvl4_base;
+    lvl4_base.health = LVL_4_HEALTH;
+    lvl4_base.pos.x = 0;
+    lvl4_base.pos.y = 0;
+    lvl4_base.img_rect = lvl2_green;
+    lvl4_base.rect = {lvl4_base.pos.x, lvl4_base.pos.y, LVL4_SPRITE_WIDTH, LVL4_SPRITE_HEIGHT};
+    wave_initer_helper(lvl4_base, WAVE_9_LVL4_AMOUNT);
+}
+
+void wave_10_init()
+{
+    enemy lvl4_base;
+    lvl4_base.health = LVL_4_HEALTH;
+    lvl4_base.pos.x = 0;
+    lvl4_base.pos.y = 0;
+    lvl4_base.img_rect = lvl2_green;
+    lvl4_base.rect = {lvl4_base.pos.x, lvl4_base.pos.y, LVL4_SPRITE_WIDTH, LVL4_SPRITE_HEIGHT};
+    wave_initer_helper(lvl4_base, WAVE_9_LVL4_AMOUNT);
 }
 
 void wave_update()
@@ -440,5 +542,4 @@ void enemies_update()
             wave_state = 4.1;
         }
     }
-    
 };

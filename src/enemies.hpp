@@ -74,6 +74,12 @@ extern void wave_1_init();
 extern void wave_2_init();
 extern void wave_3_init();
 extern void wave_4_init();
+extern void wave_5_init();
+extern void wave_6_init();
+extern void wave_7_init();
+extern void wave_8_init();
+extern void wave_9_init();
+extern void wave_10_init();
 extern void wave_update();
 
 #endif
