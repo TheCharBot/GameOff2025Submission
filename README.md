@@ -14,6 +14,7 @@ My Entry for the Game Off 2025 Game Jam
 - Make attack system  
 
 # Todo:  
+- Make Victory Conditions and Currency System  
 - Make Range Attack System  
 - Make basic sfx(optional)  
 
