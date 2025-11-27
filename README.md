@@ -2,7 +2,7 @@
 My Entry for the Game Off 2025 Game Jam  
 
 # Progress
- About 90% done  
+ About 97% done  
 
 # Currently Working On  
 - Damage and health system  
@@ -22,6 +22,7 @@ My Entry for the Game Off 2025 Game Jam
 Art: Charles  
 Code: Charles  
 Music: Charles  
+
 
 
 
