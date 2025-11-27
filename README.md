@@ -2,7 +2,7 @@
 My Entry for the Game Off 2025 Game Jam  
 
 # Progress
- About 85% done  
+ About 90% done  
 
 # Currently Working On  
 - Damage and health system  
@@ -11,10 +11,11 @@ My Entry for the Game Off 2025 Game Jam
 - Grid System  
 - Wall Placement System  
 - Enemy Wave System    
+- Make attack system  
 
 # Todo:  
-- Make attack system  
-- Make basic sfx  
+- Make Range Attack System  
+- Make basic sfx(optional)  
 
 # Credits
 Art: Charles  
