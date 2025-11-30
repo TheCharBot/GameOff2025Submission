@@ -2,6 +2,9 @@
 
 Texture2D enemy_tex;
 
+Texture2D win_screen;
+Texture2D lose_screen;
+
 Vector2 target;
 
 int num = 0;
@@ -453,6 +456,7 @@ void wave_update()
         if (enemy_list[i].health <= 0)
         {
             enemy_list.erase(enemy_list.begin() + i);
+            currency += 5;
         }
         // moving towards the center and other movement calculations
         Vector2 dir = Vector2Normalize(Vector2Subtract(target, enemy_list[i].pos));
@@ -512,6 +516,8 @@ void wave_update()
 
 void enemies_init()
 {
+    win_screen = LoadTexture("gfx/win.png");
+    lose_screen = LoadTexture("gfx/lose.png");
     enemy_tex = LoadTexture("gfx/enemies/enemies.png");
     target.x = 400;
     target.y = 400;
@@ -604,8 +610,10 @@ void enemies_update()
     }
     if(wave_state >= 1 && connector_index.size() == 0 && range_index.size() == 0 && melee_index.size() == 0){
         lost = true;
+        
     }
     if(wave_state >= 10.1 && connector_index.size() >= 1 && range_index.size() >= 1 && melee_index.size() >= 1){
         won = true;
+        
     }
 };

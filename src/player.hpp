@@ -22,6 +22,11 @@ struct tower_stats
     double health;
 };
 
+extern int cell;
+extern int last_cell;
+extern int can_place;
+extern int currency;
+
 extern Texture2D player_tex;
 
 extern std::vector<sprite_pos_rects> connector_index;

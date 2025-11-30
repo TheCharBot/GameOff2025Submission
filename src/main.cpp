@@ -42,12 +42,14 @@ int main()
 
         EndDrawing();
         if(won){
-            std::cout << "You Won!";
+            DrawTexture(win_screen, 336, 376, WHITE);
+            std::cout << "\n" <<"You Won!" << "\n";
             system("PAUSE");
             break;
         }
         if(lost){
-            std::cout << "You Lose!";
+            DrawTexture(lose_screen, 336, 376, WHITE);
+            std::cout << "\n" <<"You Lose!" << "\n";
             system("PAUSE");
             break;
         }

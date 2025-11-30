@@ -33,6 +33,8 @@ extern std::vector<enemy> empty_list;
 extern std::vector<enemy> enemy_list;
 
 extern Texture2D enemy_tex;
+extern Texture2D win_screen;
+extern Texture2D lose_screen;
 
 extern Rectangle scaled_sprites;
 

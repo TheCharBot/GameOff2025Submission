@@ -12,6 +12,8 @@ std::vector<Rectangle> range_attack_area = {};
 int cell = get_cell_mouse();
 int last_cell = 0;
 int can_place = false;
+int currency = STARTING_CURRENCY;
+
 
 Rectangle empty_base = {0, 0, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
 Rectangle basic_connector = {32, 0, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
@@ -73,11 +75,12 @@ void add_towers()
 
         if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
             can_place = true;
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && can_place)
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && can_place && currency >= 10)
         {
             // Only place if we moved to a new grid square
             if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
             {
+                currency-=10;
                 connector_index.push_back({basic_connector, {wall_place_pos.x, wall_place_pos.y, 32, 32}, TOWER_HEALTH});
 
                 last_cell = cell; // remember last placed cell
@@ -102,11 +105,12 @@ void add_towers()
         DrawTexturePro(player_tex, range_attacker, scaled_sprites, default_rotation, 0, WHITE);
         if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
             can_place = true;
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && can_place)
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && can_place && currency >= 100)
         {
             // Only place if we moved to a new grid square
             if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
             {
+                currency-=100;
                 range_index.push_back({{wall_place_pos.x, wall_place_pos.y, 32, 32}, TOWER_HEALTH});
                 range_attack_area.push_back({wall_place_pos.x - (RANGER_RANGE * 16), wall_place_pos.y - (RANGER_RANGE * 16), RANGER_RANGE * 32, RANGER_RANGE * 32});
                 last_cell = cell; // remember last placed cell
@@ -132,11 +136,12 @@ void add_towers()
         DrawTexturePro(player_tex, melee_attacker, scaled_sprites, default_rotation, 0, WHITE);
         if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
             can_place = true;
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && can_place)
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && can_place && currency >= 150)
         {
             // Only place if we moved to a new grid square
             if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
             {
+                currency-=150;
                 melee_index.push_back({{wall_place_pos.x, wall_place_pos.y, 48, 32}, TOWER_HEALTH});
 
                 last_cell = cell; // remember last placed cell
@@ -154,7 +159,8 @@ void add_towers()
 
 void player_update()
 {
-
+    DrawText("Currency: ", 600, 10, 24, BLACK);
+    DrawText(std::to_string(currency).c_str(), 750, 10, 24, BLACK);
     if (place_type == 0)
     {
         can_place = false;
