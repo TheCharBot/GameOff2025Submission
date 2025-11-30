@@ -243,6 +243,36 @@ void Bottom_button::update()
                     wave_state = 5;
                     wave_5_init();
                 }
+                if (wave_state == 5.1)
+                {
+                    wave_state = 6;
+                    wave_5_init();
+                }
+                if (wave_state == 6.1)
+                {
+                    wave_state = 6;
+                    wave_5_init();
+                }
+                if (wave_state == 7.1)
+                {
+                    wave_state = 7;
+                    wave_5_init();
+                }
+                if (wave_state == 8.1)
+                {
+                    wave_state = 8;
+                    wave_5_init();
+                }
+                if (wave_state == 9.1)
+                {
+                    wave_state = 9;
+                    wave_5_init();
+                }
+                if (wave_state == 10.1)
+                {
+                    wave_state = 10;
+                    wave_5_init();
+                }
             }
             if (self_index == 3)
             {
