@@ -1,61 +1,43 @@
-// Wavebreak
+#include "event_handler.hpp"
 
-#include "raylib.h"
+// ©2025 Charles Von Dollen, TheCharbot
+// 16x16 sprites at 320x180 is just way too good
 
-#include "gui.hpp"
-#include "player.hpp"
-#include "enemies.hpp"
+// Reminder: there must be one NPC that says "Smells like CHARACTER DEVELOPEMENT!"
 
-#include "config.hpp"
-
+// done TODO: make map 3, 4, and 5
+// TODO: make enemy AI and item / combat system
 int main()
 {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "WAVEBREAK");
-    Image icon = LoadImage("gfx/icon/icon.png");
+
+    InitWindow(WINDOW_WIDTH * scale, WINDOW_HEIGHT * scale, "SIDEQUESTERS");
+    InitAudioDevice();
+    SetTargetFPS(60);
+    Image icon;
+    icon = LoadImage("gfx/icon/icon.png");
     SetWindowIcon(icon);
     UnloadImage(icon);
-    SetTargetFPS(60);
 
-    // initing stuff
-    gui_init();
-    player_init();
-
-    enemies_init();
-    // generating grid
-    gen_grid_coords();
+    init_all();
 
     // Game Loop
+
     while (WindowShouldClose() == false)
     {
         // Game Logic
 
+        update_all();
+
         BeginDrawing();
-        DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+        ClearBackground(BLACK);
 
-        // updating stuff
+        // Game Drawing
+        draw_all();
 
-        player_update();
-        enemies_update();
-
-        // updating gui
-        gui_update();
-
+        // DrawRectangle(player_normal_hitbox.x, player_normal_hitbox.y, player_normal_hitbox.width, player_normal_hitbox.height, GREEN);
         EndDrawing();
-        if(won){
-            DrawTexture(win_screen, 336, 376, WHITE);
-            std::cout << "\n" <<"You Won!" << "\n";
-            system("PAUSE");
-            break;
-        }
-        if(lost){
-            DrawTexture(lose_screen, 336, 376, WHITE);
-            std::cout << "\n" <<"You Lose!" << "\n";
-            system("PAUSE");
-            break;
-        }
     }
 
     CloseWindow();
-
     return 0;
 }
