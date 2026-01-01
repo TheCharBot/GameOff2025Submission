@@ -14,19 +14,21 @@ My Entry for the Game Off 2025 Game Jam
 - Attack system  
   
 # Possible ideas to add if you're ever bored: 
---- Scoring/highscores
---- Infinite Levels
---- Start Screen
---- Tutorial
---- Difficulties
---- More Balance
---- Probably More!
+--- Scoring/highscores  
+--- Infinite Levels  
+--- Start Screen  
+--- Tutorial  
+--- Difficulties  
+--- More Balance  
 --- Make basic sfx   
+--- Probably More!  
+
 
 # Credits
 Art: Charles  
 Code: Charles  
 Music: Charles (there is none lol)  
+
 
 
 
