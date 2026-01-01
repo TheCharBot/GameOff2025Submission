@@ -13,21 +13,22 @@ My Entry for the Game Off 2025 Game Jam
 - Enemy Wave System    
 - Attack system  
   
-# Possible ideas to add if you're ever bored: 
---- Scoring/highscores  
---- Infinite Levels  
---- Start Screen  
---- Tutorial  
---- Difficulties  
---- More Balance  
---- Make basic sfx   
---- Probably More!  
+# Possible ideas to add: 
+- Scoring/highscores  
+- Infinite Levels  
+- Start Screen  
+- Tutorial  
+- Difficulties  
+- More Balance  
+- Make basic sfx   
+- Probably More!  
 
 
 # Credits
 Art: Charles  
 Code: Charles  
 Music: Charles (there is none lol)  
+
 
 
 
