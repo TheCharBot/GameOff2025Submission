@@ -11,17 +11,23 @@ My Entry for the Game Off 2025 Game Jam
 - Grid System  
 - Wall Placement System  
 - Enemy Wave System    
-- Make attack system  
-
-# Todo:  
-- Make Victory Conditions and Currency System  
-- Make Range Attack System  
-- Make basic sfx(optional)  
+- Attack system  
+  
+# Possible ideas to add if you're ever bored: 
+--- Scoring/highscores
+--- Infinite Levels
+--- Start Screen
+--- Tutorial
+--- Difficulties
+--- More Balance
+--- Probably More!
+--- Make basic sfx   
 
 # Credits
 Art: Charles  
 Code: Charles  
-Music: Charles  
+Music: Charles (there is none lol)  
+
 
 
 
