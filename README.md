@@ -1,9 +1,27 @@
-# SIDEQUESTERS
+# WAVEBREAK  
+My Entry for the Game Off 2025 Game Jam  
 
-A game all about sidequests  
-There is a FOSS license for now, but once the demo comes out, I will revoke it  
-Sorry, but it would make it too easy to pirate  
+# Progress
+ 100% Done!  
 
+# Currently Working On  
+- Damage and health system  
+
+# Finished Features  
+- Grid System  
+- Wall Placement System  
+- Enemy Wave System    
+- Make attack system  
+
+# Todo:  
+- Make Victory Conditions and Currency System  
+- Make Range Attack System  
+- Make basic sfx(optional)  
+
+# Credits
+Art: Charles  
+Code: Charles  
+Music: Charles  
 
 
 

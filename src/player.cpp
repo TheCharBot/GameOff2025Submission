@@ -1,388 +1,275 @@
 #include "player.hpp"
 
-Player player;
+Texture2D player_tex;
 
-enum Facing
+Vector2 wall_place_pos;
+
+std::vector<sprite_pos_rects> connector_index = {};
+std::vector<tower_stats> range_index = {};
+std::vector<tower_stats> melee_index = {};
+std::vector<Rectangle> range_attack_area = {};
+
+int cell = get_cell_mouse();
+int last_cell = 0;
+int can_place = false;
+int currency = STARTING_CURRENCY;
+
+
+Rectangle empty_base = {0, 0, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+Rectangle basic_connector = {32, 0, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+Rectangle right_connector = {64, 0, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+Rectangle left_connector = {96, 0, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+Rectangle down_right_connector = {0, 32, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+Rectangle down_connector = {32, 32, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+Rectangle left_right_connector = {64, 32, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+Rectangle left_right_wall = {96, 32, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+Rectangle down_left_connector = {0, 64, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+Rectangle down_left_right_connector = {32, 64, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+Rectangle up_down_wall = {64, 64, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+Rectangle range_attacker = {0, 96, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+Rectangle melee_attacker = {16, 96, 48, WALL_SPRITE_HEIGHT};
+Rectangle core = {96, 64, WALL_SPRITE_WIDTH, WALL_SPRITE_HEIGHT};
+
+Rectangle core_scaled = {392, 384, 32, 64};
+bool right = false;
+bool left = false;
+bool up = false;
+bool down = false;
+
+bool is_cell_occupied(float x, float y)
 {
-    UP,
-    DOWN,
-    RIGHT,
-    LEFT
-};
-Facing facing;
+    // Check connectors
+    for (auto &c : connector_index)
+        if (c.rect.x == x && c.rect.y == y)
+            return true;
 
-void init_player()
-{
+    // Check range attackers
+    for (auto &r : range_index)
+        if (r.rect.x == x && r.rect.y == y)
+            return true;
 
-    player.move_mode = 1;
-    player.pos.x = PLAYER_START_MAP_POS_X;
-    player.pos.y = PLAYER_START_MAP_POS_Y;
-    player.max_animation_frames = 12;
-    player.current_animation_frame = 0;
-    player.animation_frame_5 = 0;
-    player.normal_hitbox = {player.pos.x, player.pos.y, float(PLAYER_HITBOX_WIDTH), float(PLAYER_HITBOX_HEIGHT)};
-    player.tex = LoadTexture(PLAYER_TEX_PATH);
-};
+    // Check melee attackers
+    for (auto &m : melee_index)
+        if (m.rect.x == x && m.rect.y == y)
+            return true;
 
-void update_player()
-{
-    // dont move at all - mostly for cutscenes
-    if (player.move_mode == 0)
-    {
-        player.normal_hitbox = {
-            player.pos.x + PLAYER_HITBOX_X_OFFSET,
-            player.pos.y + PLAYER_HITBOX_Y_OFFSET,
-            float(PLAYER_HITBOX_WIDTH),
-            float(PLAYER_HITBOX_HEIGHT)};
-    }
-    // full collision movement
-    if (player.move_mode == 1)
-    {
-        player.pos_x_save = player.pos.x;
-        player.pos_y_save = player.pos.y;
-
-        player.movement = {0, 0};
-
-        // movement calculations with a seperate vector
-        if (IsKeyDown(KEY_W))
-            player.movement.y -= 1;
-        if (IsKeyDown(KEY_S))
-            player.movement.y += 1;
-        if (IsKeyDown(KEY_A))
-            player.movement.x -= 1;
-        if (IsKeyDown(KEY_D))
-            player.movement.x += 1;
-
-        // animation array calculations
-        if (player.movement.y < 0)
-        {
-            facing = UP;
-            player.current_anim_arr = player_walk_up;
-            if (player.max_animation_frames != 12)
-            {
-                player.current_animation_frame = 0;
-                player.max_animation_frames = 12;
-            }
-        }
-        else if (player.movement.y > 0)
-        {
-            facing = DOWN;
-            player.current_anim_arr = player_walk_down;
-            if (player.max_animation_frames != 12)
-            {
-                player.current_animation_frame = 0;
-                player.max_animation_frames = 12;
-            }
-        }
-        else if (player.movement.x > 0)
-        {
-            facing = RIGHT;
-            player.current_anim_arr = player_walk_right;
-            if (player.max_animation_frames != 8)
-            {
-                player.current_animation_frame = 0;
-                player.max_animation_frames = 8;
-            }
-        }
-        else if (player.movement.x < 0)
-        {
-            facing = LEFT;
-            player.current_anim_arr = player_walk_left;
-            if (player.max_animation_frames != 8)
-            {
-                player.current_animation_frame = 0;
-                player.max_animation_frames = 8;
-            }
-        }
-
-        // idle animation calculations
-        if (player.movement.x == 0 && player.movement.y == 0)
-        {
-            if (facing == UP)
-            {
-                player.current_anim_arr = player_idle_up_arr;
-                if (player.max_animation_frames != 1)
-                {
-                    player.current_animation_frame = 0;
-                    player.max_animation_frames = 1;
-                }
-            }
-            if (facing == DOWN)
-            {
-                player.current_anim_arr = player_idle_down_arr;
-                if (player.max_animation_frames != 1)
-                {
-                    player.current_animation_frame = 0;
-                    player.max_animation_frames = 1;
-                }
-            }
-            if (facing == RIGHT)
-            {
-                player.current_anim_arr = player_idle_right_arr;
-                if (player.max_animation_frames != 1)
-                {
-                    player.current_animation_frame = 0;
-                    player.max_animation_frames = 1;
-                }
-            }
-            if (facing == LEFT)
-            {
-                player.current_anim_arr = player_idle_left_arr;
-                if (player.max_animation_frames != 1)
-                {
-                    player.current_animation_frame = 0;
-                    player.max_animation_frames = 1;
-                }
-            }
-        }
-
-        // normalize diagonal movement
-        if (player.movement.x != 0 || player.movement.y != 0)
-        {
-            player.movement = Vector2Normalize(player.movement);
-
-            player.pos.x += player.movement.x * PLAYER_SPEED;
-
-            // player hitbox rebuild
-            player.normal_hitbox = {
-                player.pos.x + PLAYER_HITBOX_X_OFFSET,
-                player.pos.y + PLAYER_HITBOX_Y_OFFSET,
-                float(PLAYER_HITBOX_WIDTH),
-                float(PLAYER_HITBOX_HEIGHT)};
-            // horizontal collision check
-            for (const Rectangle &r : collision_rects)
-            {
-                if (CheckCollisionRecs(player.normal_hitbox, r))
-                {
-                    player.pos.x = player.pos_x_save;
-                    break;
-                }
-            }
-            player.pos.y += player.movement.y * PLAYER_SPEED;
-            // player hitbox rebuild
-            player.normal_hitbox = {
-                player.pos.x + PLAYER_HITBOX_X_OFFSET,
-                player.pos.y + PLAYER_HITBOX_Y_OFFSET,
-                float(PLAYER_HITBOX_WIDTH),
-                float(PLAYER_HITBOX_HEIGHT)};
-            // vertical collision check
-            for (const Rectangle &r : collision_rects)
-            {
-                if (CheckCollisionRecs(player.normal_hitbox, r))
-                {
-                    player.pos.y = player.pos_y_save;
-                    break;
-                }
-            }
-
-            // making sure the player is at least inside the screen
-            // i dont know why there is an 8 there - ???
-            player.pos.x = Clamp(player.pos.x, -23, (map_to_load.width) - (PLAYER_SPRITE_WIDTH - 40));
-            player.pos.y = Clamp(player.pos.y, -16, (map_to_load.height) - (PLAYER_SPRITE_HEIGHT - 12));
-        }
-    }
-
-    // dont move and keep animation - for attacking
-    // actually unexpectedly works!
-    if (player.move_mode == 2)
-    {
-        player.normal_hitbox = {
-            player.pos.x + PLAYER_HITBOX_X_OFFSET,
-            player.pos.y + PLAYER_HITBOX_Y_OFFSET,
-            float(PLAYER_HITBOX_WIDTH),
-            float(PLAYER_HITBOX_HEIGHT)};
-        if (player.current_animation_frame >= player.max_animation_frames - 1)
-        {
-            player.move_mode = 1;
-
-            // player.current_animation_frame = 0;
-        }
-    }
-
-    player.animation_frame_5++;
-    if (player.animation_frame_5 >= ANIMATION_INTERVAL)
-    {
-        player.current_animation_frame++;
-        if (player.current_animation_frame >= player.max_animation_frames)
-        {
-            player.current_animation_frame = 0;
-        }
-        player.animation_frame_5 = 0;
-    }
-    player.normal_hitbox = {
-        player.pos.x + PLAYER_HITBOX_X_OFFSET,
-        player.pos.y + PLAYER_HITBOX_Y_OFFSET,
-        float(PLAYER_HITBOX_WIDTH),
-        float(PLAYER_HITBOX_HEIGHT)};
-    for (int i = 0; i < int(map_load_rects.size()); i++)
-    {
-
-        if (CheckCollisionRecs(player.normal_hitbox, map_load_rects[i].rect))
-        {
-            requested_player_pos = map_load_rects[i].spawnpoint;
-            requested_map = Map_names(map_load_rects[i].map_to_load_struct);
-        }
-    }
-
-    // item use for 3 slots
-    if (!is_inv_open)
-    {
-        if (IsKeyPressed(KEY_Q))
-        {
-
-            if (inventory_slots[23].filled_with)
-            {
-                // implement item 1 usage here
-                if (inventory_slots[23].filled_with->type == COMBAT_MELEE)
-                {
-                    // TODO: implement item use!
-
-                    if (facing == DOWN)
-                    {
-                        player.current_anim_arr = player_sword_slash_down_arr;
-                    }
-                    if (facing == UP)
-                    {
-                        player.current_anim_arr = player_sword_slash_up_arr;
-                    }
-                    if (facing == LEFT)
-                    {
-                        player.current_anim_arr = player_sword_slash_left_arr;
-                    }
-                    if (facing == RIGHT)
-                    {
-                        player.current_anim_arr = player_sword_slash_right_arr;
-                    }
-                    player.current_animation_frame = 0;
-                    player.max_animation_frames = 5;
-                    player.move_mode = 2;
-                }
-                if (inventory_slots[23].filled_with->type == COMBAT_RANGED)
-                {
-                }
-                if (inventory_slots[25].filled_with->type == SHEILD)
-                {
-                }
-                if (inventory_slots[23].filled_with->type == QUEST_ITEM)
-                {
-                }
-                if (inventory_slots[23].filled_with->type == CONSUMABLE)
-                {
-                }
-                if (inventory_slots[23].filled_with->type == DUNGEON)
-                {
-                }
-            }
-            else
-            {
-            }
-        }
-        else if (IsKeyPressed(KEY_E))
-        {
-            if (inventory_slots[24].filled_with)
-            {
-                // implement item 2 usage here
-                if (inventory_slots[24].filled_with->type == COMBAT_MELEE)
-                {
-                    
-
-                    if (facing == DOWN)
-                    {
-                        player.current_anim_arr = player_sword_slash_down_arr;
-                    }
-                    if (facing == UP)
-                    {
-                        player.current_anim_arr = player_sword_slash_up_arr;
-                    }
-                    if (facing == LEFT)
-                    {
-                        player.current_anim_arr = player_sword_slash_left_arr;
-                    }
-                    if (facing == RIGHT)
-                    {
-                        player.current_anim_arr = player_sword_slash_right_arr;
-                    }
-                    player.current_animation_frame = 0;
-                    player.max_animation_frames = 5;
-                    player.move_mode = 2;
-                }
-                if (inventory_slots[24].filled_with->type == COMBAT_RANGED)
-                {
-                }
-                if (inventory_slots[25].filled_with->type == SHEILD)
-                {
-                }
-                if (inventory_slots[24].filled_with->type == QUEST_ITEM)
-                {
-                }
-                if (inventory_slots[24].filled_with->type == CONSUMABLE)
-                {
-                }
-                if (inventory_slots[24].filled_with->type == DUNGEON)
-                {
-                }
-            }
-            else
-            {
-            }
-        }
-        else if (IsKeyPressed(KEY_Z))
-        {
-            if (inventory_slots[25].filled_with)
-            {
-                // implement item 3 usage here
-                if (inventory_slots[25].filled_with->type == COMBAT_MELEE)
-                {
-                    
-
-                    if (facing == DOWN)
-                    {
-                        player.current_anim_arr = player_sword_slash_down_arr;
-                    }
-                    if (facing == UP)
-                    {
-                        player.current_anim_arr = player_sword_slash_up_arr;
-                    }
-                    if (facing == LEFT)
-                    {
-                        player.current_anim_arr = player_sword_slash_left_arr;
-                    }
-                    if (facing == RIGHT)
-                    {
-                        player.current_anim_arr = player_sword_slash_right_arr;
-                    }
-                    player.current_animation_frame = 0;
-                    player.max_animation_frames = 5;
-                    player.move_mode = 2;
-                }
-                if (inventory_slots[25].filled_with->type == COMBAT_RANGED)
-                {
-                }
-                if (inventory_slots[25].filled_with->type == SHEILD)
-                {
-                }
-                if (inventory_slots[25].filled_with->type == QUEST_ITEM)
-                {
-                }
-                if (inventory_slots[25].filled_with->type == CONSUMABLE)
-                {
-                }
-                if (inventory_slots[25].filled_with->type == DUNGEON)
-                {
-                }
-            }
-            else
-            {
-            }
-        }
-    }
-
-    // animation thingy
-
-    // std::cout << player.pos.x << "  " << player.pos.y << "\n";
+    return false; // cell is free
 }
 
-void draw_player()
+void player_init()
 {
-    DrawTexturePro(player.tex, player.current_anim_arr[player.current_animation_frame], {player.pos.x * scale, player.pos.y * scale, float(PLAYER_SPRITE_WIDTH * scale), float(PLAYER_SPRITE_HEIGHT * scale)}, {0, 0}, 0, WHITE);
+    player_tex = LoadTexture("gfx/walls/walls.png");
+}
+
+void add_towers()
+{
+    if (place_type == 1)
+    {
+
+        cell = get_cell_mouse();
+        wall_place_pos.x = grid_spaces_x[get_cell_mouse()];
+        wall_place_pos.y = grid_spaces_y[get_cell_mouse()];
+        Rectangle scaled_sprites = {wall_place_pos.x, wall_place_pos.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
+
+        DrawTexturePro(player_tex, basic_connector, scaled_sprites, default_rotation, 0, WHITE);
+
+        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+            can_place = true;
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && can_place && currency >= 10)
+        {
+            // Only place if we moved to a new grid square
+            if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
+            {
+                currency-=10;
+                connector_index.push_back({basic_connector, {wall_place_pos.x, wall_place_pos.y, 32, 32}, TOWER_HEALTH});
+
+                last_cell = cell; // remember last placed cell
+            }
+        }
+        if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+        {
+            place_type = 0;
+            can_place = false;
+            last_cell = -1;
+        }
+    }
+
+    // range attacker placement
+    if (place_type == 2)
+    {
+        cell = get_cell_mouse();
+        wall_place_pos.x = grid_spaces_x[get_cell_mouse()];
+        wall_place_pos.y = grid_spaces_y[get_cell_mouse()];
+        Rectangle scaled_sprites = {wall_place_pos.x, wall_place_pos.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
+
+        DrawTexturePro(player_tex, range_attacker, scaled_sprites, default_rotation, 0, WHITE);
+        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+            can_place = true;
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && can_place && currency >= 100)
+        {
+            // Only place if we moved to a new grid square
+            if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
+            {
+                currency-=100;
+                range_index.push_back({{wall_place_pos.x, wall_place_pos.y, 32, 32}, TOWER_HEALTH});
+                range_attack_area.push_back({wall_place_pos.x - (RANGER_RANGE * 16), wall_place_pos.y - (RANGER_RANGE * 16), RANGER_RANGE * 32, RANGER_RANGE * 32});
+                last_cell = cell; // remember last placed cell
+            }
+        }
+
+        if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+        {
+            place_type = 0;
+            can_place = false;
+            last_cell = -1;
+        }
+    }
+
+    // melee attacker placement
+    if (place_type == 3)
+    {
+        cell = get_cell_mouse();
+        wall_place_pos.x = grid_spaces_x[get_cell_mouse()];
+        wall_place_pos.y = grid_spaces_y[get_cell_mouse()];
+        Rectangle scaled_sprites = {wall_place_pos.x, wall_place_pos.y, float(48 * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
+
+        DrawTexturePro(player_tex, melee_attacker, scaled_sprites, default_rotation, 0, WHITE);
+        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+            can_place = true;
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && can_place && currency >= 150)
+        {
+            // Only place if we moved to a new grid square
+            if (cell != last_cell && !is_cell_occupied(wall_place_pos.x, wall_place_pos.y))
+            {
+                currency-=150;
+                melee_index.push_back({{wall_place_pos.x, wall_place_pos.y, 48, 32}, TOWER_HEALTH});
+
+                last_cell = cell; // remember last placed cell
+            }
+        }
+
+        if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+        {
+            place_type = 0;
+            can_place = false;
+            last_cell = -1;
+        }
+    }
 };
+
+void player_update()
+{
+    DrawText("Currency: ", 600, 10, 24, BLACK);
+    DrawText(std::to_string(currency).c_str(), 750, 10, 24, BLACK);
+    if (place_type == 0)
+    {
+        can_place = false;
+    }
+
+    if (place_type != 0 && menu_state == 0)
+    {
+
+        add_towers();
+    }
+
+    // drawing stored towers
+    // connector stuff
+    std::sort(connector_index.begin(), connector_index.end(), [](auto &a, auto &b)
+              { return a.rect.y < b.rect.y; });
+    for (int i = 0; i < int(connector_index.size()); i++)
+    {
+        if (connector_index[i].health <= 0)
+        {
+            connector_index.erase(connector_index.begin() + i);
+        };
+        right = false;
+        left = false;
+        up = false;
+        down = false;
+        for (int j = 0; j < int(connector_index.size()); j++)
+        {
+            if (i == j)
+                continue;
+            if (connector_index[j].rect.x == connector_index[i].rect.x && connector_index[j].rect.y == connector_index[i].rect.y - 32)
+                up = true;
+            if (connector_index[j].rect.x == connector_index[i].rect.x && connector_index[j].rect.y == connector_index[i].rect.y + 32)
+                down = true;
+            if (connector_index[j].rect.x == connector_index[i].rect.x - 32 && connector_index[j].rect.y == connector_index[i].rect.y)
+                left = true;
+            if (connector_index[j].rect.x == connector_index[i].rect.x + 32 && connector_index[j].rect.y == connector_index[i].rect.y)
+                right = true;
+        }
+        Rectangle sprite;
+
+        if (up && down && left && right)
+            sprite = down_left_right_connector;
+        else if (down && left && right)
+            sprite = down_left_right_connector;
+        else if (up && left && right)
+            sprite = left_right_connector;
+        else if (up && down && left)
+            sprite = down_left_connector;
+        else if (up && down && right)
+            sprite = down_right_connector;
+        else if (left && right)
+            sprite = left_right_wall;
+        else if (up && down)
+            sprite = up_down_wall;
+        else if (down && right)
+            sprite = down_right_connector;
+        else if (down && left)
+            sprite = down_left_connector;
+        else if (up && right)
+            sprite = right_connector;
+        else if (up && left)
+            sprite = left_connector;
+        else if (right)
+            sprite = right_connector;
+        else if (left)
+            sprite = left_connector;
+        else if (down)
+            sprite = down_connector;
+        else if (up)
+            sprite = basic_connector;
+        else
+            sprite = basic_connector;
+
+        connector_index[i].img_rect = sprite;
+        Rectangle scaled_sprites = {connector_index[i].rect.x, connector_index[i].rect.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
+
+        DrawTexturePro(player_tex, connector_index[i].img_rect, scaled_sprites, default_rotation, 0, WHITE);
+    }
+
+    // range stuff
+    std::sort(range_index.begin(), range_index.end(), [](auto &a, auto &b)
+              { return a.rect.y < b.rect.y; });
+    for (int i = 0; i < int(range_index.size()); i++)
+    {
+        // add range attacking here
+
+        if (range_index[i].health <= 0)
+        {
+            range_index.erase(range_index.begin() + i);
+            range_attack_area.erase(range_attack_area.begin() + i);
+        };
+
+        Rectangle scaled_sprites = {range_index[i].rect.x, range_index[i].rect.y, float(WALL_SPRITE_WIDTH * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
+        DrawTexturePro(player_tex, range_attacker, scaled_sprites, default_rotation, 0, WHITE);
+    }
+
+    // melee stuff
+    std::sort(melee_index.begin(), melee_index.end(), [](auto &a, auto &b)
+              { return a.rect.y < b.rect.y; });
+    for (int i = 0; i < int(melee_index.size()); i++)
+    {
+
+        if (melee_index[i].health <= 0)
+        {
+            melee_index.erase(melee_index.begin() + i);
+        };
+        Rectangle scaled_sprites = {melee_index[i].rect.x, melee_index[i].rect.y, float(48 * WALL_SCALE), float(WALL_SPRITE_HEIGHT * WALL_SCALE)};
+        DrawTexturePro(player_tex, melee_attacker, scaled_sprites, default_rotation, 0, WHITE);
+    }
+
+    // DrawTexturePro(player_tex, core, core_scaled, default_rotation, 0, WHITE);
+}

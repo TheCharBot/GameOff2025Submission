@@ -1,43 +1,70 @@
-#include "event_handler.hpp"
+// Wavebreak
 
-// ©2025 Charles Von Dollen, TheCharbot
-// 16x16 sprites at 320x180 is just way too good
+#include "raylib.h"
 
-// Reminder: there must be one NPC that says "Smells like CHARACTER DEVELOPEMENT!"
+#include "gui.hpp"
+#include "player.hpp"
+#include "enemies.hpp"
 
-// done TODO: make map 3, 4, and 5
-// TODO: make enemy AI and item / combat system
+#include "config.hpp"
+
+
+// Possible ideas to add if you're ever bored: 
+// --- Scoring/highscores
+// --- Infinite Levels
+// --- Start Screen
+// --- Tutorial
+// --- Difficulties
+// --- More Balance
+// --- Probably More!
 int main()
 {
-
-    InitWindow(WINDOW_WIDTH * scale, WINDOW_HEIGHT * scale, "SIDEQUESTERS");
-    InitAudioDevice();
-    SetTargetFPS(60);
-    Image icon;
-    icon = LoadImage("gfx/icon/icon.png");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "WAVEBREAK");
+    Image icon = LoadImage("gfx/icon/icon.png");
     SetWindowIcon(icon);
     UnloadImage(icon);
+    SetTargetFPS(60);
 
-    init_all();
+    // initing stuff
+    gui_init();
+    player_init();
+
+    enemies_init();
+    // generating grid
+    gen_grid_coords();
 
     // Game Loop
-
     while (WindowShouldClose() == false)
     {
         // Game Logic
 
-        update_all();
-
         BeginDrawing();
-        ClearBackground(BLACK);
+        DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
 
-        // Game Drawing
-        draw_all();
+        // updating stuff
 
-        // DrawRectangle(player_normal_hitbox.x, player_normal_hitbox.y, player_normal_hitbox.width, player_normal_hitbox.height, GREEN);
+        player_update();
+        enemies_update();
+
+        // updating gui
+        gui_update();
+
         EndDrawing();
+        if(won){
+            DrawTexture(win_screen, 336, 376, WHITE);
+            std::cout << "\n" <<"You Won!" << "\n";
+            system("PAUSE");
+            break;
+        }
+        if(lost){
+            DrawTexture(lose_screen, 336, 376, WHITE);
+            std::cout << "\n" <<"You Lose!" << "\n";
+            system("PAUSE");
+            break;
+        }
     }
 
     CloseWindow();
+
     return 0;
 }
